@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="../js/bootstrap.min.css"/>
+    <script src="../js/react.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../js/react-dom.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../js/browser.min.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+<script type="text/babel">
+    /*var HelloDada = React.createClass({
+        getInitialState:function(){
+            return{
+                name:''
+            };
+        },
+        handleChange:function(e){
+            console.log(e)
+            this.setState({
+                name:e.target.value
+            });
+        },
+        render:function(){
+            return <div>
+                <input onChange={this.handleChange} />
+            </div>
+        }
+    });
+    ReactDOM.render(<HelloDada/>,document.body);*/
+    var HelloDada = React.createClass({
+        getInitialState:function(){
+            return {
+                backgroundColor:'#FFFFFF'
+            }
+        },
+        handleWheel:function(e){
+           /* console.log(parseInt(this.state.backgroundColor.substr(1),16)+e.deltaY*997)
+            console.log(e.deltaY*997)*/
+            var newColor = (parseInt(this.state.backgroundColor.substr(1),16)+e.deltaY*997).toString(16);
+            this.setState({
+                backgroundColor:"gold"
+            })
+            console.log(newColor)
+        },
+        render:function(){
+            return (
+                    <div onWheel={this.handleWheel} style={this.state}>
+                        <p>Dada Shuaige</p>
+                    </div>
+            )
+        }
+    });
+    ReactDOM.render(<HelloDada />,document.body)
+</script>
+</body>
+</html>

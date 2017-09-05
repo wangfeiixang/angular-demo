@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html ng-app="myapp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css"/>
+    
+</head>
+<style type="text/css">
+	.item-box{
+		height: 200px;
+		overflow: hidden;
+		position: relative;
+	}
+</style>
+<body>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				知识点：
+			</div>
+			<div class="panel-body">
+				<p></p>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				效果：
+			</div>
+			<div class="panel-body">
+				<div class="item-box" id="wrapper" ng-controller="myController">
+					
+					<ul class="list-group">
+						<li my-finished="refresh" class="list-group-item" ng-repeat="data  in dataList" >{{data}}--{{$last}}</li>
+					</ul>
+					
+				</div>
+			</div>
+		</div>
+	</div >
+
+
+	
+</body>
+<script src="angular.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="iscroll.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+
+	var app = angular.module("myapp",[]);
+	var myScroll = new iScroll('wrapper',{
+//		checkDOMChanges:true
+	})
+	
+	app.directive("myFinished",function(){
+		return {
+			restrict:'A',
+//			scope:{},
+			link:function(scope,element,attrs){
+				if(scope.$last){
+					/*setTimeout(function(){
+						scope[attrs.myFinished]()
+					},0)*/
+					scope[attrs.myFinished]()
+				}
+			}
+//			controller:
+//			require;
+//			scope:;
+		}
+	})
+	
+	app.controller("myController",["$scope",'$http',function($scope,$http){
+		$http({
+			url:'http://datainfo.duapp.com/shopdata/getclass.php',
+			method:'get',
+			params:{}
+		}).success(function(data){
+			$scope.dataList=data;
+		})
+		
+		$scope.refresh=function(){
+			myScroll.refresh()
+		}
+	}])
+	
+	//检测ng-repeat结束，然后去执行一段代码
+	
+	//filter  数据格式化    service 提供功能   指令  
+	
+//	myScroll.refresh()
+	
+</script>
+</html>

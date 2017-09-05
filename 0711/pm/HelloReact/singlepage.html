@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../bootstrap.min.css"/>
+    <script src="react.min.js"></script>
+    <script src="react-dom.min.js"></script>
+    <script src="browser.min.js"></script>
+
+</head>
+<style>
+	html,body{
+		height: 100%;	
+		
+	}
+</style>
+<body>
+   
+   
+   
+   
+</body>
+<script type="text/babel">
+   var RootComponent=React.createClass({
+   		render:function(){
+   			var style={
+   				height:'100%',
+   				backgroundColor:"red",
+   				display:'flex',
+   				flexDirection:'column',
+   				justifyContent:'space-between'
+   			}
+   			return (
+   				<div style={style}>
+   					<HeaderComponent/>
+   					<ContentComponent/>
+   					<FooterComponent/>
+   					
+   				</div>
+   			)
+   		}
+   })
+   var HeaderComponent=React.createClass({
+   		render:function(){
+   			var style={
+   				height:'45px',
+   				backgroundColor:"#333",
+   				flexGrow:'0',
+   				flexShrink:"0"
+   			}
+   			return (
+   				<header style={style}>
+   					
+   				</header>
+   			)
+   		}
+   })
+   var FooterComponent=React.createClass({
+   		render:function(){
+   			var style={
+   				height:'50px',
+   				backgroundColor:"green",
+   				flexGrow:'0',
+   				flexShrink:"0"
+   			}
+   			return (
+   				<footer style={style}>
+   					<FooterAComponent text="首页"/>
+   					<FooterAComponent text="分类"/>
+   					<FooterAComponent text="购物车"/>
+   					<FooterAComponent text="我的"/>
+   				</footer>
+   			)
+   		}
+   })
+   var FooterAComponent=React.createClass({
+   		render:function(){
+   			var style={
+   				display:'block',
+   				float:'left',
+   				width:'25%',
+   				height:'50px',
+   				textAlign:'center',
+   				lineHeight:'50px'
+   			}
+   			return (
+   				<a style={style} href="#">{this.props.text}</a>
+   			) 
+   		}
+   })
+   
+   var ContentComponent=React.createClass({
+   		render:function(){
+   			var style={
+   				backgroundColor:"orange",
+   				flexGrow:'1',
+   				overflow:'scroll',
+   				webkitOverflowScrolling:'touch' 
+   			}
+   			var arr=['白菜','菠菜','黄瓜','油麦菜','西兰花','香菜'];
+   			var caiArr=[];
+   			for(var i =0;i<arr.length;i++){
+   				caiArr.push(<ItemComponent title={arr[i]}/>)
+   			}
+   			return (
+   				<section style={style}>
+   					<div style={{backgroundColor:'#fff'}}>
+   						<img style={{display:'block',margin:'0 auto'}} src="cai1.jpg"/>
+   					</div>
+   					{caiArr}
+   				</section>
+   			)
+   		}
+   })
+   var ItemComponent=React.createClass({
+   		render:function(){
+   			var style={
+   				out:{
+   					padding:'10px',
+   					height:'100px',
+   					background:"purple",
+   					position:"relative"
+   				},
+   				img:{
+   					width:"80px",
+   					height:"80px",
+   					float:'left'
+   				},
+   				div:{
+   					float:'left',
+   					marginLeft:"15px",
+   					color:"#fff"
+   				}
+   			}
+   			//aa
+   			return (
+   				<div style={style.out}>
+   					<img style={style.img} src="cai1.jpg" alt="" />
+   					<div style={style.div}>
+   						<h5>{this.props.title}</h5>
+   						<p>这真的就是一颗菜</p>
+   					</div>
+   					<ButtonComponent/>
+   					{/*aa*/}
+   				</div>
+   			)
+   		}
+   })
+   
+   var ButtonComponent=React.createClass({
+   		render:function(){
+   			var style={
+   				position:"absolute",
+   				right:"15px",
+   				top:"15px"
+   			}
+   			return (
+   				<button onClick={function(){alert(1)}} style={style} className="btn btn-warning">按钮</button>
+   				
+   			) 
+   		}
+   })
+   
+   ReactDOM.render(<RootComponent/>,document.body)
+    
+</script>
+</html>

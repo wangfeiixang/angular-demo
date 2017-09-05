@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html ng-app="myapp">
+<head lang="en">
+    <meta charset="UTF-8">
+    	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+</head>
+<body>
+	<header class="bar bar-nav">
+		<a ng-click="pageTo('concat')" ng-show="path=='detail'" class="icon icon-left pull-left open-panel"></a>
+        <h1 class="title">辣条</h1>
+    </header>
+
+    <!-- 工具栏 -->
+    <nav class="bar bar-tab">
+        <a ng-class="path=='chat'?'active':''" class="tab-item external" ng-click="pageTo('chat')" >
+            <span class="icon icon-message"></span>
+            <span class="tab-label">聊天</span>
+        </a>
+        <a ng-class="path=='concat'||path=='detail'?'active':''" class="tab-item external" ng-click="pageTo('concat')">
+            <span class="icon icon-friends"></span>
+            <span class="tab-label">联系人</span>
+        </a>
+        <a ng-class="path=='circle'?'active':''" class="tab-item external" ng-click="pageTo('circle/movie')">
+            <span class="icon icon-browser"></span>
+            <span class="tab-label">朋友圈</span>
+        </a>
+    </nav>
+
+    <!-- 这里是页面内容区 -->
+    <div class="content" ui-view>
+        <!--<div class="content-block" ></div>-->
+    </div>
+	
+</body>
+<script src="../angular.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../angular-ui-router.js" type="text/javascript" charset="utf-8"></script>
+
+<script type="text/javascript">
+    //为什么要使用ui-router
+    //可以做路由嵌套
+
+    //1. 引入angular-router文件     引入ui-router文件
+    //2. ngRoute                ui.router
+    //3. 路由表
+    //  $routeProvider    .when(path,{template/templateUrl,controller}).when(...).otherwise({redirectTo:/...})
+
+    // $stateProvider  .state(name,{url:path,template/templateUrl,controller})
+    // $urlRouterProvider .otherwise(path)
+
+
+    //4.让路由能接受参数         /path/:param1/:param2     same
+
+    //5.路由控制器接收参数   $routeParams       $stateParams
+
+    //6.二级路由的配置   路由名前要加父级路由的名字.    传参和接收参数和一级路由一样，   ui-view
+
+    var app = angular.module("myapp",['ui.router']);
+    app.config(['$stateProvider','$urlRouterProvider',function($stateProvider,$urlRouterProvider){
+
+        $urlRouterProvider.otherwise('/chat');
+
+        $stateProvider.state("chat",{
+            url:'/chat',
+            templateUrl:"template/chat.html",
+            controller:"chatController"
+        }).state("concat",{
+            url:'/concat',
+            templateUrl:"template/concat.html",
+            controller:"concatController"
+        }).state('detail',{
+            url:'/detail/:id',
+            templateUrl:"template/detail.html",
+            controller:"detailController"
+        }).state("circle",{
+            url:'/circle',
+            templateUrl:"template/circle.html",
+            controller:"circleController"
+        }).state("circle.movie",{
+            url:'/movie',
+            templateUrl:"template/circle_tab/movie.html",
+            controller:"movieController"
+        }).state("circle.book",{
+            url:'/book',
+            templateUrl:"template/circle_tab/book.html",
+            controller:"bookController"
+        })
+
+    }])
+
+    app.factory("friendsdata",function(){
+        return []
+    })
+
+    app.run(['$rootScope','$location',function($rootScope,$location){
+        $rootScope.path=$location.path().length>1?$location.path().substr(1):'chat';
+        $rootScope.pageTo=function(path){
+            $location.path(path);
+        }
+    }])
+
+
+    app.controller("chatController",function($scope,$rootScope){
+        $scope.name="allen"
+        $rootScope.path='chat'
+    })
+
+    app.controller("concatController",function($scope,$rootScope,$http,friendsdata){
+        console.log(1)
+        $scope.name="allen";
+        $rootScope.path='concat';
+        $http({
+            url:'./friends1.0.json',
+            method:'get'
+//            dataType:'json'
+        }).success(function(data){
+            console.log(data)
+            $scope.friends=data;
+            data.forEach(function(item,i){
+                friendsdata.push(item)
+            })
+        })
+    })
+
+    app.controller("detailController",function($scope,$rootScope,$stateParams,friendsdata){
+        console.log($stateParams)
+        $rootScope.path='detail'
+        friendsdata.forEach(function(friend,i){
+            if(friend.id==$stateParams.id){
+                $scope.friend=friend
+            }
+        })
+        //真实开发的话，应该都会再重新获取详情数据
+
+    })
+
+    app.controller("circleController",function($scope,$rootScope){
+        $scope.name="allen"
+        $rootScope.path='circle'
+        $scope.sub_path='movie'
+    })
+
+    app.controller("movieController",function($scope,$http){
+        $http({
+            url:'https://api.douban.com/v2/movie/in_theaters?city=',
+            method:'jsonp',
+            params:{
+            }
+        }).success(function(data){
+            $scope.movies=data.subjects;
+            console.log(data)
+        })
+    })
+
+    app.controller("bookController",function($scope,$stateParams,$http){
+    	
+    	if(localStorage.books){
+			var thebooks=JSON.parse(localStorage.books)
+			var thetime=thebooks.time;
+			console.log(thebooks)
+			if((new Date().getTime()-Number(thetime))<=1000*60){	
+				console.log('not get')
+				$scope.movies=thebooks.books;
+				return ;
+			}
+	
+		}
+		console.log('get')
+		$http({
+			url:'http://getdata.duapp.com/getTouJson.php?callback=JSON_CALLBACK',
+			method:'jsonp',
+			params:{
+				src:'https://api.douban.com//v2/movie/top250'
+			}
+		}).success(function(data){
+			console.log('get  ok')
+			$scope.movies=data.subjects;
+			localStorage.books=JSON.stringify({
+				books:$scope.movies,
+				time:new Date().getTime()
+			})
+		})
+
+    })
+</script>
+</html>
+

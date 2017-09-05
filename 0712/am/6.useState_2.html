@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>Document</title>
+	<link rel="stylesheet" type="text/css" href="../js/bootstrap.min.css"/>
+	<script src="../js/react.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/react-dom.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/browser.min.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">知识点：</div>
+			<div class="panel-body">
+				<p>状态改变(setState)的时候，组件会重新执行render函数</p>
+				<p>可以通过在dom结构上的某一个标签上加上ref属性，这样的话就可以给这个标签做一个标记，通过this.refs.refname、this.refs['refname']去获取</p>
+				<p>
+					<button onclick="change()" class="btn btn-success" id="btn">添加</button>
+				</p>
+			</div>
+		</div>
+	</div>
+
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">效果：</div>
+			<div class="panel-body">
+				这里是我们的组件：
+				<hr />
+				<div id="hello"></div>
+				<hr />
+				<div id="hello1"></div>
+			</div>
+		</div>
+	</div>
+	
+	
+	<script type="text/babel">
+		
+		var Menu=React.createClass({
+			getInitialState:function(){
+				return {
+					isShow:true
+				}
+			},
+			toggleMenu:function(){
+
+				this.state.isShow=!this.state.isShow
+				this.setState({
+					isShow:this.state.isShow
+				})
+//				document.getElementById('myp').style.display=this.state.isShow?'block':'none'
+				console.log(this.refs)
+				this.refs.myp.style.display=this.state.isShow?'block':'none'
+			},
+			render:function(){
+				return (
+					<div>
+						<button onClick={this.toggleMenu} className="btn btn-success">菜单按钮</button>
+						<hr/>
+						<p style={{display:this.state.isShow?'block':'none'}}>1我会显示和隐藏</p>
+						<p ref="myp">2.我会显示和隐藏</p>
+					</div>
+				)
+			}
+		})
+		
+		ReactDOM.render(<Menu/>,document.getElementById('hello'))
+		ReactDOM.render(<Menu/>,document.getElementById('hello1'))
+
+
+
+		/*document.getElementById("btn").onclick = function () {
+			change();
+		}*/
+
+	</script>
+	<script>
+		function change() {
+			console.log("改变")
+		}
+	</script>
+</body>

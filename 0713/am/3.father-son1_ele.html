@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>Document</title>
+	<link rel="stylesheet" type="text/css" href="../js/bootstrap.min.css"/>
+	<script src="../js/react.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/react-dom.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/browser.min.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">知识点：</div>
+			<div class="panel-body">
+				
+				<p>父组件将自己的状态传递给子组件，子组件在属性里接受，当父组件改变自己状态的时候，子组件的属性也会改变</p>
+				
+			</div>
+		</div>
+	</div>
+
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">效果：</div>
+			<div class="panel-body">
+				这里是我们的组件：
+				<hr />
+				<div id="hello"></div>
+				<hr />
+				<div id="hello1"></div>
+			</div>
+		</div>
+	</div>
+	
+	
+	<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+	<script type="text/babel">
+		'https://api.douban.com/v2/movie/in_theaters?city=北京'
+		
+		var Father=React.createClass({
+			getInitialState:function(){
+				return {
+					city:'北京'
+				}
+			},
+			changeCity:function(city,e){
+				this.setState({
+					city:city
+				})
+			},
+			render:function(){
+				return (
+					<div>
+						<button onClick={this.changeCity.bind(this,'北京')}  className="btn btn-success">北京</button>
+						<button onClick={this.changeCity.bind(this,'上海')}  className="btn btn-success">上海</button>
+						<button onClick={this.changeCity.bind(this,'重庆')}  className="btn btn-success">重庆</button>
+						<hr/>
+						
+						<Son city={this.state.city}/>
+						
+					</div>
+				)
+								
+			}
+		})
+		
+		var Son=React.createClass({
+			getDefaultProps:function(){
+				return {
+					url:'https://api.douban.com/v2/movie/in_theaters'
+				}
+			},
+			getInitialState:function(){
+				return {
+					movies:null,
+					isGetMovie:true
+				}
+			},
+			getMovies:function(city){
+				var that = this;
+				that.setState({
+					isGetMovie:true
+				})
+				$.ajax({
+					url:that.props.url,
+					data:{
+						city:city||that.props.city
+					},
+					dataType:'jsonp',
+					success:function(result){
+						//console.log(result)
+						that.setState({
+							movies:result,
+							isGetMovie:false
+						})
+					}
+				})
+			},
+			componentWillReceiveProps:function(props){
+				
+				//当父组件更改了子组件自己的属性的时候触发
+				//在这里更改状态的操作不会引起运行中阶段其他钩子函数执行
+				//这里的属性刚刚获取过来还没有给this.props上更新
+				this.getMovies(props.city)
+			},
+			componentWillMount:function(){
+				this.getMovies()
+			},
+			componentWillUpdate:function () {
+				console.log("componentWillUpdate....");
+			},
+
+			putMovies:function(){
+				var arr=[];
+				if(this.state.movies){
+					this.state.movies.subjects.forEach(function(movie,i){
+						arr.push(<li className="list-group-item" >
+							<img src={movie.images.medium}/>
+							<p>{movie.title}</p>
+						</li>)
+					})
+				}
+				//console.log(arr);
+				return arr;
+			},
+			render:function(){
+				return (
+					<div>
+						{
+							this.state.isGetMovie?<p className="alert alert-info">正在加载...</p>:''
+						}
+						
+						<p>{this.state.movies?this.state.movies.title:''}</p>
+						<ul className="list-group">
+							{this.putMovies()}
+						</ul>
+						
+					</div>
+				)				
+			}
+		})
+		
+		
+		ReactDOM.render(<Father/>,document.getElementById('hello'));
+	</script>
+</body>

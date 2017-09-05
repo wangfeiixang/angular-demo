@@ -1,0 +1,29 @@
+
+
+<div class="panel panel-primary col-xs-6 col-xs-offset-3 login-view">
+	<div class="panel-heading">
+		登陆：
+	</div>
+	<div class="panel-body">
+		
+		<form ng-submit="(yan && zheng)?login():''">
+			<div class="label label-danger" ng-bind="message"></div>
+			<div class="form-group">
+				<label for="">用户名：</label>
+				<div class="label label-danger" ng-hide="yan">请重新输入用户名</div>
+				<input ng-model="uname" ng-blur="yan=blur(0,uname)" type="text" class="form-control" />
+			</div>
+			<div class="form-group">
+				<label for="">密码：</label>
+				<div class="label label-danger" ng-hide="zheng">请重新输入密码</div>
+				<input ng-model='upass' ng-blur="zheng=blur(1,upass)" type="password" class="form-control" />
+			</div>
+			<div class="form-group">
+				<button type="submit" class="btn btn-success">提交</button>
+				<button type="reset" class="btn btn-default">重置</button>
+				<a href="#/register" class="btn btn-info">去注册</a>
+				<a href="#/main" class="btn btn-info">回到首页</a>
+			</div>
+		</form>
+	</div>
+</div>

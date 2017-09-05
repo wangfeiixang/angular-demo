@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		
+		<div id="a"></div>
+		
+	</body>
+	<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+		<script type="text/javascript">
+			//125-181
+			//0.2-2
+			var num=0;
+			console.time('temp');
+			document.getElementById('a').innerHTML=num;	
+			for(var i =0;i<10000;i++){
+//				var _num=parseInt(document.getElementById('a').innerHTML);
+//				document.getElementById('a').innerHTML=++_num;	
+				num++;
+			}
+			document.getElementById('a').innerHTML=num;
+			console.timeEnd('temp');
+		</script>
+	
+</html>

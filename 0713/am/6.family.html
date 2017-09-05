@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>Document</title>
+	
+	<link rel="stylesheet" type="text/css" href="../js/bootstrap.min.css"/>
+	<link rel="stylesheet" type="text/css" href="../js/swiper-3.3.1.min.css"/>
+	<script src="../js/react.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/react-dom.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/browser.min.js" type="text/javascript" charset="utf-8"></script>
+	
+</head>
+<body>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">知识点：</div>
+			<div class="panel-body">
+				<p>一个神奇的家庭</p>
+			</div>
+		</div>
+	</div>
+
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">效果：</div>
+			<div class="panel-body">
+				这里是我们的组件：
+				<hr />
+				<div id="hello"></div>
+				<hr />
+				<div id="hello1"></div>
+			</div>
+		</div>
+	</div>
+	
+	
+	<script src="../js/swiper-3.3.1.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/babel">
+		
+		
+		
+		var Father=React.createClass({
+			
+			hitSon:function(){
+				this.refs.son.toLearn()
+			},
+			
+			render:function(){
+				return (
+					<div>
+						<p>我是爸爸</p>
+						
+						<hr/>
+						
+						<Son ref="son"/>
+						
+						<hr/>
+						
+						<Daughter calldaddy={this.hitSon}/>
+						
+					</div>
+				)
+			}
+		})
+		
+		var Daughter=React.createClass({
+			render:function(){
+				return (
+					<div>
+						<p>我是女儿</p>
+						<p><button onClick={this.props.calldaddy}  className="btn btn-danger">告状</button></p>
+					</div>
+				)
+			}
+		})
+//		flux redux
+		
+		var Son=React.createClass({
+			getInitialState:function(){
+				return {
+					doing:'玩游戏...'
+				}
+			},
+			toLearn:function(){
+				this.setState({
+					doing:'学习...'
+				})
+			},
+			render:function(){
+				return (
+					<div>
+						<p>我是儿子</p>
+						<p>我正在{this.state.doing}</p>
+					</div>
+				)
+			}
+		})
+		
+//		redux...状态管理工具
+		ReactDOM.render(<Father/>,document.getElementById('hello'));
+	</script>
+</body>

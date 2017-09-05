@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>Document</title>
+	<link rel="stylesheet" type="text/css" href="../js/bootstrap.min.css"/>
+	<script src="../js/react.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/react-dom.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/browser.min.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">知识点：</div>
+			<div class="panel-body">
+				<p>父组件可以将自己的方法传给子组件供子组件来调用</p>
+			</div>
+		</div>
+	</div>
+
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">效果：</div>
+			<div class="panel-body">
+				这里是我们的组件：
+				<hr />
+				<div id="hello"></div>
+				<hr />
+				<div id="hello1"></div>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/babel">
+		var Father = React.createClass({
+			getInitialState:function(){
+				return {
+					money:10
+				}
+			},
+			buySonRacoon:function(){
+				this.setState({
+					money:--this.state.money
+				})
+			},
+			render:function(){
+				return (
+					<div>
+						<p>我是二狗的父亲,我有{this.state.money}块钱,我{this.state.money>0?'不':''}穷</p>
+						<p>这是我儿子:</p>
+						<hr/>
+						<Son calldaddy={this.buySonRacoon}/>
+					</div>
+				)
+			}
+		})
+		var Son = React.createClass({
+			render:function(){
+				return (
+					<div>
+						<p>我是二狗</p>
+						<p><button onClick={this.props.calldaddy} className="btn btn-success">我要吃!</button></p>
+					</div>
+				)
+			}
+		})
+			
+		ReactDOM.render(<Father/>,document.getElementById('hello'));
+	</script>
+</body>

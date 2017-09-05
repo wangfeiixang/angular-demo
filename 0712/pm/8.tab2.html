@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>Document</title>
+	<link rel="stylesheet" type="text/css" href="../js/bootstrap.min.css"/>
+	<script src="../js/react.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/react-dom.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/browser.min.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<style>
+	.tab-box{
+		width: 200px;
+		height: 200px;
+		position: relative;
+	}
+	.tab-content{
+		width: 200px;
+		height: 200px;
+		box-sizing: border-box;
+		border:1px solid #333;
+		text-align: center;
+		line-height: 200px;
+		position: absolute;
+		top: 0;left: 0;
+		display:none;
+	}
+</style>
+<body>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">知识点：</div>
+			<div class="panel-body">
+				<p>ref不止能给组件内部dom做标记，还可以给子组件做标记，这样就可以形成一条ref链</p>
+				<p>ref标记类似于id，是唯一的</p>
+			</div>
+		</div>
+	</div>
+
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">效果：</div>
+			<div class="panel-body">
+				
+				<div id="hello"></div>
+				
+			</div>
+		</div>
+	</div>
+	
+	
+	<script type="text/babel">
+		
+		var Tab = React.createClass({
+			getInitialState:function(){
+				return {
+					content:[
+						"第一条",
+						"第二条",
+						"第三条"
+					],
+					index:0
+				}
+			},
+			changeIndex:function(num){
+				this.setState({
+					index:num
+				})
+			},
+			render:function(){
+				return (
+					<div>
+						<p>
+							<button onClick={this.changeIndex.bind(this,0)} className="btn btn-success">1</button>
+							<button onClick={this.changeIndex.bind(this,1)} className="btn btn-success">2</button>
+							<button onClick={this.changeIndex.bind(this,2)} className="btn btn-success">3</button>
+						</p>
+						<div className="tab-box">
+							<TabContent display={this.state.index==0?"block":"none"} text={this.state.content[0]}/>
+							<TabContent display={this.state.index==1?"block":"none"} text={this.state.content[1]}/>
+							<TabContent display={this.state.index==2?"block":"none"} text={this.state.content[2]}/>
+						</div>
+					</div>
+				)
+			}
+		})
+		
+		
+		var TabContent = React.createClass({
+			render:function(){
+				return (
+					<div style={{display:this.props.display}} className="tab-content">
+						{this.props.text}
+					</div>
+				)
+			}
+		})
+		
+		ReactDOM.render(<Tab/>,document.getElementById("hello"))
+		
+		
+	</script>
+</body>

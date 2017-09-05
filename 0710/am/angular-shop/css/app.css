@@ -1,0 +1,68 @@
+
+/*commond*/
+
+.flex-center{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+
+/*header*/
+
+.logo{
+	width: 200px;
+}
+.head-box{
+	height: 89px;
+	/*display: flex;
+	justify-content: space-around;
+	align-items: center;*/
+	position: relative;
+}
+
+.head-box>div{
+	width: 300px;
+	height: 89px;
+	position: absolute;
+	right: 0;
+	top: 0;
+	background: #fff;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	
+}
+
+.no-p{
+	padding: 0;
+}
+.no-m{
+	margin: 0;
+}
+
+
+/*detail*/
+
+.detail.btn-box .btn{
+	width: 80%;
+	display: block;
+	margin: 0 auto 10px;
+}
+
+
+/*car*/
+
+.car.btn-box .btn{
+	width: 80%;
+	display: block;
+	margin: 0 auto 10px;
+}
+
+.car table th,.car table td{
+	text-align: center;
+}
+.car table .num{
+	display: inline-block;
+	margin: 0px 15px;
+}

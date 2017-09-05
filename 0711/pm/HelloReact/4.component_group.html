@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>Document</title>
+	<link rel="stylesheet" type="text/css" href="../bootstrap.min.css"/>
+	<script src="react.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="react-dom.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="browser.min.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">知识点：</div>
+			<div class="panel-body">
+				<p>1.组件可以组合使用，在大组件里嵌套小组件，这也是我们常做的，因为一个页面或者说一个项目通常会分成很多的小的组件，必然会形成嵌套关系</p>
+				<p>2.可以将很多的子组件放入一个数组里，然后在render方法return出来的dom结构里渲染这个数组</p>
+			</div>
+		</div>
+	</div>
+	<style>
+		.comment-box{
+			width: 500px;
+			/*height: 500px;*/
+			padding: 15px;
+			border:1px solid #333;
+			margin:0 auto
+		}
+		.media-object{
+			width: 100px;
+		}
+		.comment-form{
+			margin-top: 15px;
+		}
+		.comment-item{
+			position: relative;
+		}
+	</style>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">效果：</div>
+			<div class="panel-body" id="panel-body">
+				<div id="comment"></div>
+			</div>
+		</div>		
+	</div>	
+	<script type="text/babel">
+		
+		var CommentBoxComponent = React.createClass({
+			render:function(){
+				return (
+					<div className="comment-box">
+						<h4>Comment</h4>
+						<hr/>
+						
+						<CommentListComponent/>
+						<FormBoxComponent/>
+					</div>
+				)
+			}
+		})
+		
+		var CommentListComponent = React.createClass({
+			render:function(){
+				return (
+					<div className="comment-list">
+						<CommentItemComponent/>
+						<CommentItemComponent/>
+						<CommentItemComponent/>
+					</div>
+				)
+			}
+		})
+		var CommentItemComponent = React.createClass({
+			render:function(){
+				return (
+					<div className="media comment-item">
+					  <div className="media-left">
+					    <a href="#">
+					      <img className="media-object" src="../../../img/img1.jpg" alt="..." />
+					    </a>
+					  </div>
+					  <div className="media-body">
+					    <h4 className="media-heading">Media heading</h4>
+					    ...
+					  </div>
+					  
+					  <ButtonComponent  text={"回复"}/>
+					  
+					</div>
+				)
+			}
+		})
+		
+		var FormBoxComponent = React.createClass({
+			render:function(){
+				return (
+					<form className="comment-form">
+						<textarea className="form-control"></textarea>
+						<p style={{position:"relative",height:'35px',marginTop:'15px'}}>
+							<ButtonComponent text={"提交"}/>
+						</p>
+					</form>
+				)
+			}
+		})
+		
+		var ButtonComponent = React.createClass({
+			render:function(){
+				return (
+					<button style={{position:'absolute',top:0,right:'0px'}} className="btn btn-primary pull-right">{this.props.text}</button>
+				)
+			}
+		})
+
+		ReactDOM.render(<CommentBoxComponent/>,document.getElementById("comment"))
+	</script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>Document</title>
+	<link rel="stylesheet" type="text/css" href="bootstrap.min.css"/>
+	
+	<script src="react.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="react-dom.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="browser.min.js" type="text/javascript" charset="utf-8"></script>
+	
+</head>
+<body>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">知识点：</div>
+			<div class="panel-body">
+				<p>react和react-dom，这两个js是react核心的js文件里面有React,ReactDOM核心的对象</p>
+				<p>
+					我们组件里使用了jsx语法，这是浏览器不能解析的，我们需要使用某些方法将其编译成原生的写法：React.createElement,在真实开发中不需要引入browser.js，它会帮我们在浏览器端去进行编译，性能不好，真实开发我们会搭建webpack环境来进行编译
+				</p>
+				
+				<p>React.createClass来创建组件，render方法return出来的就是我们的虚拟dom</p>
+				<p>ReactDOM.render可以将组件渲染在页面中的某个元素里</p>
+				
+			</div>
+		</div>
+		
+		
+		<div class="panel panel-primary">
+			<div class="panel-heading">效果：</div>
+			<div class="panel-body">
+			
+					<div id="hello"></div>
+				
+			</div>
+		</div>
+		
+	</div>
+	<!--<div id="a"></div>-->
+</body>
+
+<script type="text/babel">
+	
+	//react 独孤求败
+	
+	//组件
+	var Hello = React.createClass({
+		render:function(){
+			return (
+				<h3>hello world</h3>
+			)
+		}
+	})
+	
+	
+	ReactDOM.render(<Hello/>,document.getElementById("hello"));
+	
+	
+</script>
+
+</html>

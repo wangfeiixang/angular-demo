@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>Document</title>
+	<link rel="stylesheet" type="text/css" href="../bootstrap.min.css"/>
+	<script src="react.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="react-dom.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="browser.min.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<style>
+	#red{
+		color:red
+	}
+	.blue{
+		color: blue;
+	}
+	*[data-color="yellow"]{
+		color:yellow;
+	}
+</style>
+<body>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">知识点：</div>
+			<div class="panel-body">
+				<p>1.给组件里的dom添加样式的时候，行内样式添加方法与真实dom不同：</p>
+				<code>style={{color:'red'}}</code>
+				<p>2.只要标签的style属性里用{}包裹的是一个样式对象就可以使用，我们可以将此样式对象设置在render函数内、组件外部、组件的属性上、组件的原型上设置样式</p>
+				
+				<p>3.我们可以将样式设置在css类名、自定义属性、id等上面，给dom添加这些属性</p>
+				<p>4.注意，添加类名的话不能写class，因为这是一个保留字，需要写成className</p>
+			</div>
+		</div>
+	</div>
+	
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">效果：</div>
+			<div class="panel-body">
+				
+				<div id="hello"></div>
+				
+			</div>
+		</div>
+	</div>
+	<script type="text/babel">
+		
+		var Hello = React.createClass({
+			render:function(){
+				return (					
+					<div>
+						<p id="red">hello world</p>
+						<p className="blue">hello world</p>
+						<p data-color="yellow">hello world</p>
+						<p style={{color:'green',fontSize:'2em'}}>hello world</p>
+						
+						<p style={this.style}>hello world</p>
+					</div>
+				)
+			}
+		})
+		
+		Hello.prototype.style={color:'deeppink',fontSize:'2.5em'}
+	
+		ReactDOM.render(<Hello/>,document.getElementById("hello"))
+	</script>
+</body>
+</html>

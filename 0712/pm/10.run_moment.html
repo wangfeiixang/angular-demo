@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>Document</title>
+	<link rel="stylesheet" type="text/css" href="../js/bootstrap.min.css"/>
+	<script src="../js/react.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/react-dom.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/browser.min.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">知识点：</div>
+			<div class="panel-body">
+				<p>以下是运行中阶段的钩子函数，按执行顺序：</p>
+				<p>componentWillReceiveProps，父组件修改自己的属性触发  参数为接受到的属性     可以根据传入的属性来修改自己的状态</p>
+				<p>shouldComponentUpdate，组件接收到属性时要不要更新dom，提高性能   返回false会阻止render调用，使组件不更新   大部分时候不会使用，写出来了就必须来return一个  </p>
+				<p>componentWillUpdate  组件要更新前，不能阻止更新    两个参数  第一个是属性，第二个参数为状态 (是更改后的，如果没改就是null)  可以查看哪些状态和属性更改了</p>
+				<p>render 渲染虚拟dom到真实dom结构里</p>
+				<p>componentDidUpdate  组件更新后，可以修改真实dom了</p>
+			</div>
+		</div>
+	</div>
+
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">效果：</div>
+			<div class="panel-body">
+				这里是我们的组件：
+				<hr />
+				<div id="hello"></div>
+				<hr />
+				<div id="hello1"></div>
+			</div>
+		</div>
+	</div>
+	
+	
+	<script type="text/babel">
+		
+		var Father=React.createClass({
+			
+			getInitialState:function(){
+				return {
+					hitnum:0
+				}
+			},
+			hitSon:function(){
+				this.setState({
+					hitnum:++this.state.hitnum
+				})
+			},
+			render:function(){
+				return (
+					<div>					
+						<p>我是父亲,下面是我的儿子:</p>	
+						<p><button onClick={this.hitSon} className="btn btn-success">打儿子</button></p>
+						<hr/>
+						<Son hitnum={this.state.hitnum} />
+					</div>
+				)
+			}
+		})
+		
+		var Son=React.createClass({
+			getInitialState:function(){
+				return {
+					isHurt:false
+				}
+			},
+			//getInitialState,getDefaultProps,componentWillMount,render,compoentDidMount
+			componentWillReceiveProps:function(props,state){
+				if(props.hitnum>5){
+					this.setState({
+						isHurt:true
+					})
+				}
+				console.log('son:componentWillReceiveProps')
+			},
+			shouldComponentUpdate:function(props,state){
+				
+				console.log('son:shouldComponentUpdate')
+				if(props.hitnum>6){
+					return false
+				}else{
+					return true;
+				}
+				
+			},
+			componentWillUpdate:function(props,state){
+				
+				console.log('son:componentWillUpdate')
+			},
+			render:function(){
+				console.log('render')
+				return (
+					<div >					
+						<p>我是儿子</p>	
+						<p ref="myp">爸爸打了我{this.props.hitnum}次,我{this.state.isHurt?'':'不'}疼</p>
+					</div>
+				)
+			},
+			componentDidUpdate:function(){
+				console.log('son:componentDidUpdate')
+				
+//				console.log(this.refs.myp.innerHTML)
+			}
+		})
+		ReactDOM.render(<Father />,document.getElementById('hello'))
+	</script>
+</body>

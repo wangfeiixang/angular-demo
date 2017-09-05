@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>Document</title>
+	<link rel="stylesheet" type="text/css" href="../js/bootstrap.min.css"/>
+	<script src="../js/react.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/react-dom.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/browser.min.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">知识点：</div>
+			<div class="panel-body">
+				
+				
+				
+			</div>
+		</div>
+	</div>
+
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">效果：</div>
+			<div class="panel-body">
+				这里是我们的组件：
+				<hr />
+				<div id="hello"></div>
+				
+			</div>
+		</div>
+	</div>
+	
+	
+	
+	
+	<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+	<script type="text/babel">
+		var RootComponent = React.createClass({
+			render:function(){
+				return (
+					<div>
+						<h4>登陆:</h4>
+						<FormComponent/>
+					</div>
+				)
+			}
+		})
+		
+		var FormComponent = React.createClass({
+			getInitialState:function(){
+				return {
+					username:'',
+					password:'',
+					email:''
+				}
+			},
+			handleSubmit:function(e){
+				e.preventDefault()
+				console.log(this.state.username)
+				console.log(this.state.password)
+			},
+			changeUsername:function(e){
+				this.setState({
+					username:e.target.value
+				})
+			},
+			changeValueBind:function(type,e){
+				var obj={};
+				obj[type]=e.target.value;
+				this.setState(obj)
+			},
+			changeValue:function(type){
+				var that=this;
+				return function(e){
+					var obj={};
+					obj[type]=e.target.value;
+					that.setState(obj)
+				}
+			},
+			changeValue:function (type) {
+				var that = this;
+				return function (e) {
+					var obj = {}
+
+				}
+			},
+			render:function(){
+				return (
+					<form onSubmit={this.handleSubmit}>						
+						<div className="form-group">
+							<label for="">用户名:</label>
+							<input onInput={this.changeUsername} type="text" className="form-control" />
+						</div>
+						<div className="form-group">
+							<label for="">密码:</label>
+							<input onInput={this.changeValueBind.bind(this,'password')} type="password" className="form-control" />
+						</div>
+						<div className="form-group">
+							<label for="">email:</label>
+							<input onInput={this.changeValue('email')} type="text" className="form-control" />
+						</div>
+						<div className="form-group">
+							<button type="submit" className="btn btn-success">提交</button>
+							<button type="reset" className="btn btn-default">重置</button>
+						</div>
+					</form>
+				)
+			}
+			
+		})
+		
+		ReactDOM.render(<RootComponent/>,document.getElementById("hello"));
+		
+		
+//		var a={
+//			b:function(){
+//				return function(){
+//					console.log(this)
+//				}
+//			}
+//		}
+
+	</script>
+	<style>
+		/*less:*/
+		/*.border-bottom(@w:1px,@color:#333){
+			border-bottom: @w solid @color;
+		}
+		
+		.a{
+			.border-bottom;
+		}
+		.b{
+			.border-bottom(2px,red)
+		}*/
+		
+		
+		/*scss*/
+		
+		/*@mixin border-bottom ($w:1px,$color:#333){
+			border-bottom: $w solid$color;
+		}
+		.a{
+			@include border-bottom;
+		}
+		.b{
+			@include border-bottom(2px,red);
+		}*/
+	</style>
+</body>

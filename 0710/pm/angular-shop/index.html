@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html ng-app="myapp">
+	<head>
+		<meta charset="UTF-8">
+			<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>angular-shop</title>
+		<link rel="stylesheet" type="text/css" href="lib/boot/css/bootstrap.min.css"/>
+		<link rel="stylesheet" type="text/css" href="css/app.css"/>
+	</head>
+	<body ng-controller="appController">
+		
+		<header class="container">
+			<div class="panel panel-primary">
+				<div class="panel-body clearfix">
+					<img src="img/logo.jpg" class="img-thumbnail logo"/>
+					
+					<div class="right pull-right">
+						<div ng-hide="appdata.username" class="login-box">
+							<my-link to="login"  class="btn btn-success">登陆</my-link>
+							<my-link to="register"  class="btn btn-success">注册</my-link>
+						</div>
+						<div ng-show="appdata.username" class="info-box">
+							<p>欢迎 <span ng-bind="appdata.username"></span> 回来&nbsp;&nbsp;</p>
+							<button ng-click="exit()" class="btn btn-success">注销</button>
+						</div>
+					</div>
+					
+					
+				</div>
+			</div>
+			
+		</header>
+		
+		<section class="container" ng-view>
+		</section>
+		
+		
+		
+	</body>
+	<script src="lib/iscroll.js" type="text/javascript" charset="utf-8"></script>
+	<script src="lib/angular.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="lib/angular-route.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/modules/httpserver.js" type="text/javascript" charset="utf-8"></script>
+	
+	<script src="js/app.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/service.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/filter.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/directive.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/controller.js" type="text/javascript" charset="utf-8"></script>
+</html>

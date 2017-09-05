@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>Document</title>
+	<link rel="stylesheet" type="text/css" href="../js/bootstrap.min.css"/>
+	<script src="../js/react.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/react-dom.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/browser.min.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">知识点：</div>
+			<div class="panel-body">
+				<p>如何根据属性来判断显示的内容</p>
+				<p>1.使用三元表达式</p><!--{this.props.name？this.props.name:"野狗子"}-->
+				<p>2.使用||</p><!--{this.props.name||"野狗子"}-->
+				<p>3.先算好，存在变量里再输出</p><!--{this.getName()}-->
+				<p>4.把判断写成一个方法，在输出的地方去执行这个方法</p>
+				<p>5.万能函数表达式</p>
+			</div>
+		</div>
+	</div>
+
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">效果：</div>
+			<div class="panel-body">
+				这里是我们的组件：
+				<hr />
+				<div id="hello"></div>
+				<hr />
+				<div id="hello1"></div>
+			</div>
+		</div>
+	</div>
+	
+	
+	<script type="text/babel">
+		
+		var Father = React.createClass({
+			render:function(){
+				return (
+					<div>
+						<p>我是父亲,这是我的儿子们:</p>
+						<hr/>
+						
+						<Son name={"大狗子"} />
+						<Son name={"二狗子"} />
+						<Son/>
+					</div>
+				)
+			}
+		})
+//		<p>我是儿子,我叫{this.props.name||'野狗子'}</p>
+//		<p>我是儿子,我叫{this.props.name?this.props.name:'野狗子'}</p>
+//		<p>我是儿子,我叫{this.getName()}</p>
+		var Son = React.createClass({
+			getName:function(){
+				var name='';
+				if(this.props.name){
+					name=this.props.name
+				}else{
+					name='野狗子'
+				}
+				return name
+			},
+			render:function(){
+				
+//				var name='';
+//				if(this.props.name){
+//					name=this.props.name
+//				}else{
+//					name='野狗子'
+//				}
+//				
+				return (
+					<div>
+						
+						<p>我是儿子,我叫{this.getName()}</p>
+					</div>
+				)
+			}
+		})
+		/*{(function(obj){
+			var name='';
+			if(obj.props.name){
+				name=obj.props.name
+			}else{
+				name='野狗子'
+			}
+			return name
+		})(this)}*/
+		
+		ReactDOM.render(<Father/>,document.getElementById("hello"));
+		
+		// 当前的方法属于谁，this就指向谁
+	</script>
+</body>

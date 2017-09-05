@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>Document</title>
+	<link rel="stylesheet" type="text/css" href="../js/bootstrap.min.css"/>
+	<script src="../js/react.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/react-dom.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/browser.min.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">知识点：</div>
+			<div class="panel-body">
+				
+				<p>如果需要给表单控件添加默认值，需要写成defaultValue，写value的话不能使用</p>
+				
+			</div>
+		</div>
+	</div>
+
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">效果：</div>
+			<div class="panel-body">
+				这里是我们的组件：
+				<hr />
+				<div id="hello"></div>
+				<hr />
+				<div id="hello1"></div>
+			</div>
+		</div>
+	</div>
+	
+	
+	
+	
+	<script type="text/babel">
+		
+		var Hello=React.createClass({
+			render:function(){
+				return (
+					<form>
+						<input type="text" defaultValue="123" />
+						<input type="checkbox" defaultChecked />
+						<select defaultValue="A">
+							<option value="A">A</option>
+							<option value="B">B</option>
+							<option value="C">C</option>
+						</select>
+					</form>
+				)
+			}
+		})
+		
+		
+		
+		ReactDOM.render(<Hello/>,document.getElementById('hello'));
+	</script>
+</body>

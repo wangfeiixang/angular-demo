@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<style type="text/css">
+		.red{color: red;}
+		.blue{color: blue;}
+		.green{color: green;}
+		.yellow{color: yellow;}
+	</style>
+	<body>
+		
+		<ul>
+			<li>1</li>
+			<li>2</li>
+			<li>3</li>
+			<li>4</li>
+		</ul>
+		<!--<button onclick="change()">
+			change
+		</button>	-->
+	</body>
+	<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+	<script type="text/javascript">
+		//0.9  - 5.8
+		console.time('temp');
+		change()
+		function change(){			
+			$("li").each(function(i){
+				switch(i){
+					case 0:$(this).addClass("red");break;
+					case 1:$(this).addClass("blue");break;
+					case 2:$(this).addClass("green");break;
+					case 3:$(this).addClass("yellow");break;
+				}
+			})	
+		}
+		console.timeEnd('temp')
+		
+		
+		
+		//1.创建出了完整的虚拟dom结构
+		var virtual_dom={
+			tag:'body',
+			className:'',
+			content:[{
+				tag:'ul',
+				className:'',
+				content:[
+					{
+						tag:'li',
+						className:'',
+						content:'1'
+					},
+					{
+						tag:'li',
+						className:'',
+						content:'2'
+					},
+					{
+						tag:'li',
+						className:'',
+						content:'3'
+					},
+					{
+						tag:'li',
+						className:'',
+						content:'4'
+					}
+				]
+			}]
+		}
+		
+		//2.再次构建虚拟dom，操作虚拟dom
+		
+		console.time('temp')
+		
+		var _virtual_dom={}
+		$.extend(_virtual_dom,virtual_dom)
+		
+		_virtual_dom.content[0].content.forEach(function(item,i){
+			switch(i){
+					case 0:item.className="red";break;
+					case 1:item.className="blue";break;
+					case 2:item.className="green";break;
+					case 3:item.className="yellow";break;
+				}
+		})
+		console.log(_virtual_dom)
+		
+		//3.进行对比   diff算法   
+		
+		//4.将对应的地方进行更新
+		var str=''
+		_virtual_dom.content[0].content.forEach(function(item,i){
+			str+="<"+item.tag+" class='"+item.className+"'>"+item.content+"</"+item.tag+">"
+		})
+		
+		$("body ul").html(str)
+		 
+		console.timeEnd('temp')
+		
+		
+		//dom
+		$("ul").hide()//dom
+		$("ul").show()//dom
+		
+	</script>
+</html>

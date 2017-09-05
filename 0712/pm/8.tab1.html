@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>Document</title>
+	<link rel="stylesheet" type="text/css" href="../js/bootstrap.min.css"/>
+	<script src="../js/react.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/react-dom.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/browser.min.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<style>
+	.tab-content{
+		width: 200px;
+		height: 200px;
+		border:1px solid #333;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+</style>
+<body>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">知识点：</div>
+			<div class="panel-body">
+				<p>ref不止能给组件内部dom做标记，还可以给子组件做标记，这样就可以形成一条ref链</p>
+				<p>ref标记类似于id，是唯一的</p>
+			</div>
+		</div>
+	</div>
+
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">效果：</div>
+			<div class="panel-body">
+				
+				<div id="hello"></div>
+				
+			</div>
+		</div>
+	</div>
+	<script type="text/babel">
+		
+		var Tab = React.createClass({
+			getInitialState:function(){
+				return{
+					content:[
+						"这是第1条",
+						"这是第2条",
+						"这是第3条"
+					],
+					index:0
+				}
+
+			},
+			change:function (num) {
+				this.setState({
+					index:num
+				})
+			},
+			render:function(){
+				return (
+					<div>
+						<p>
+							<button onClick={this.change.bind(this,0)} className="btn btn-success">1</button>
+							<button onClick={this.change.bind(this,1)} className="btn btn-success">2</button>
+							<button onClick={this.change.bind(this,2)} className="btn btn-success">3</button>
+						</p>
+						<TabContent text={this.state.content[this.state.index]}/>
+					</div>
+				)
+			}
+		})
+		
+		
+		var TabContent = React.createClass({
+			render:function(){
+				return (
+					<div className="tab-content">
+						{this.props.text}
+					</div>
+				)
+			}
+		})
+		
+		ReactDOM.render(<Tab/>,document.getElementById("hello"))
+		
+		
+	</script>
+</body>

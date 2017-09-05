@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html ng-app="myapp">
+<head lang="en">
+    <meta charset="UTF-8">
+    	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+</head>
+<body ng-controller="appController">
+	<header class="bar bar-nav">
+		<a  class="icon icon-left pull-left open-panel"></a>
+        <h1 class="title">辣条</h1>
+    </header>
+
+    <!-- 工具栏 -->
+    <nav class="bar bar-tab">
+        <a ng-click="pageTo('chat')" ng-class="active.active=='chat'?'active' : '' " class="tab-item external"  >
+            <span class="icon icon-message"></span>
+            <span class="tab-label">聊天</span>
+        </a>
+        <a ng-click="pageTo('concat')" ng-class="active.active=='concat'?'active' : '' " class="tab-item external" >
+            <span class="icon icon-friends"></span>
+            <span class="tab-label">联系人</span>
+        </a>
+        <a ng-click="pageTo('circle')" ng-class="active.active=='circle'?'active' : '' " class="tab-item external">
+            <span class="icon icon-browser"></span>
+            <span class="tab-label">朋友圈</span>
+        </a>
+    </nav>
+
+    <!-- 这里是页面内容区 -->
+    <div class="content" ui-view>
+        <!--<div class="content-block" ></div>-->
+    </div>
+	
+</body>
+<script src="../angular.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../angular-ui-router.js" type="text/javascript" charset="utf-8"></script>
+
+<script type="text/javascript">
+	//为什么要使用ui-router
+	//可以做路由嵌套
+	
+	//1. 引入angular-router文件     引入ui-router文件      
+	//2. ngRoute                ui.router              
+	//3. 路由表
+	//  $routeProvider    .when(path,{template/templateUrl,controller}).when(...).otherwise({redirectTo:/...})
+	
+	// $stateProvider  .state(name,{url:path,template/templateUrl,controller})
+	// $urlRouterProvider .otherwise(path)
+	
+	
+	//4.让路由能接受参数         /path/:param1/:param2     same
+	
+	//5.路由控制器接收参数   $routeParams       $stateParams
+	
+	//6.二级路由的配置   路由名前要加父级路由的名字.    传参和接收参数和一级路由一样，   ui-view
+	
+	var app = angular.module("myapp",['ui.router']);
+	
+	//配置路由表
+	
+	app.config(["$stateProvider","$urlRouterProvider",function($stateProvider,$urlRouterProvider){
+		
+		$urlRouterProvider.otherwise("/chat");
+		
+		$stateProvider.state("chat",{
+			url:"/chat",
+			templateUrl:"template1/chat.html",
+			controller:"chatController"
+		}).state("concat",{
+			url:"/concat",
+			templateUrl:"template1/concat.html",
+			controller:"concatController"
+		}).state("detail",{
+            url:"/detail/:id",
+            templateUrl:"template1/detail.html",
+            controller:"detailController"
+        }).state("circle",{
+			url:"/circle",
+			templateUrl:"template1/circle.html",
+			controller:"circleController"
+		}).state("circle.movie",{
+            url:'/movie',
+            templateUrl:"template1/circle_tab/movie.html",
+            controller:"movieController"
+        })
+		
+	}])
+	
+	//控制器
+	//一级页面主控制器
+	app.controller("appController",function($scope,$location,$rootScope){
+		
+		//$location.path('/chat');
+		
+		$rootScope.active ={
+					active : 'chart'
+		}
+		
+		$scope.pageTo = function(page){
+			
+			$scope.true = page;
+			
+			$scope.path = '/'+page+'';
+			$location.path($scope.path);
+			
+			//console.log( $scope.true )
+		
+			if(!$scope.true){
+				$rootScope.active ={
+					active : 'chart'
+				}
+			}
+			
+			$rootScope.active ={
+				active : $scope.true
+			}
+			//console.log( $rootScope.active.active )
+		}
+		
+		
+		
+	})
+	
+		//一级页面控制器chatController
+	app.controller("chatController",function($scope,$rootScope){
+		$rootScope.active.active='chat';
+		
+	})
+
+    app.service("myservice",function () {
+        this.friend = [];
+    })
+	
+	app.controller("concatController",function($scope,$rootScope,$http,myservice){
+		$rootScope.active.active = 'concat';
+		//console.log(1);
+		$http({
+			url:'friends.json',
+			method:'jsonp',
+		}).success(function(data){
+			$scope.friends = data;
+            myservice.friend = $scope.friends;
+           // console.log( $scope.friends );
+			
+		})
+
+	})
+
+    app.controller("detailController",function($scope,$rootScope,$stateParams,myservice){
+        //$stateParams.id
+        $rootScope.active.active='concat';
+        myservice.friend.forEach(function (value,index) {
+             //console.log(value.id)
+             if ( $stateParams.id == value.id ){
+                 $scope.friend = value;
+               //  console.log(  $scope.friend )
+                 /*break;
+                 $scope.$apply();*/
+             }
+        })
+       // console.log( myservice )
+    })
+	
+	app.controller("circleController",function($scope,$rootScope){
+		
+		$rootScope.active.active='circle';
+	})
+
+    app.controller("movieController",function($scope,$rootScope){
+
+        console.log(1)
+
+    })
+	
+	
+</script>
+</html>
+

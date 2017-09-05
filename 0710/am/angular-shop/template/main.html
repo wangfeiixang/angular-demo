@@ -1,0 +1,45 @@
+
+
+<p class="text-info">欢迎光临羊驼水果店。</p>
+
+<p class="text-info">请选择您要的产品并将其添加到您的购物车。</p>
+
+<p class="text-info">当您完成后，请单击“购物车图标”来查看您的订单信息。</p>
+
+<p class="text-info">搜索</p>
+
+<input ng-model="filterBy" type="text"class="form-control"/>
+
+<div class="panel panel-default" style="margin-top: 20px;">
+	<div class="panel-heading">
+		商品列表
+		<a href="#/car" class="pull-right">
+			<span class="glyphicon glyphicon-shopping-cart"></span>
+			<span ng-bind="all_info.all_num"></span>件，
+			<span   ng-bind="all_info.all_price | currency : '￥'"></span>
+		</a>
+	</div>
+	<div class="panel-body">
+		<table class="table table-bordered">
+			<tr>
+				<th>图片</th>
+				<th>介绍</th>
+				<th>价格</th>
+				<th>操作</th>
+			</tr>
+			
+			<tr ng-repeat="good in goods | myFilter :filterBy">
+				<td class="text-center"><img ng-src="{{good.imgUrl}}"/></td>
+				<td>
+					<a href="#/detail/{{good.id}}" ng-bind="good.name"></a>
+					<p ng-bind="good.description"></p>
+				</td>
+				<td class="text-center" ng-bind="good.price | currency :'￥'">
+				</td>
+				<td class="text-center">
+					<button ng-click="add(good.id,good.name,good.price)" class="btn btn-danger">加入购物车</button>
+				</td>
+			</tr>
+		</table>
+	</div>
+</div>

@@ -1,0 +1,14 @@
+<style>
+	/*.buttons-tab.circle-tab{
+		width: 100%;
+		position: fixed;
+		top: 45px;
+	}*/
+</style>
+<div class="buttons-tab circle-tab" >
+	<a ng-click="sub_path='movie'" ng-class="sub_path=='movie'?'active':''" href="#/circle/movie" class="tab-link button">电影</a>
+	<a ng-click="sub_path='book'" ng-class="sub_path=='book'?'active':''" href="#/circle/book"  class="tab-link button">图书</a>
+</div>
+<div class="content-block" ui-view >
+
+</div>

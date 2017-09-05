@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html ng-app="myapp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css"/>
+    
+</head>
+<body>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				知识点：
+			</div>
+			<div class="panel-body">
+				<p></p>
+			</div>
+		</div>
+	</div>
+	<div class="container" ng-controller="myController">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				效果：
+			</div>
+			<div class="panel-body">
+				<!--<my-hello a=1></my-hello>
+				
+				<div my-hello="123"></div>
+				<hr />
+				<div my-hello ng-repeat="x in [1,2,3,4,5]"></div>
+				<hr />
+				<p my-red>我爱北京天安门</p>
+				<hr />
+				
+				<my-redt>
+					我爱北京天安门
+				</my-redt>
+				<hr />
+				<p my-color="blue">我爱北京天安门</p>
+				<p my-color="yellow">我爱北京天安门</p>
+				<p my-color="green">我爱北京天安门</p>
+				<p my-color="哈哈哈">我爱北京天安门</p>-->
+				<!--<div my-hello ></div>
+				<div ng-controller="myController">
+					<div my-hello ></div>
+				</div>-->
+				
+				<!--<my color="red">你好</my>
+				<my color="gold">你好</my>
+				<my color="skyblue">你好</my>
+				<my color="purple" content="健康电饭锅电饭锅的书法家的手机放到手机费大幅度减肥的设计费定时关机">你好</my>-->
+				<hr />
+				<!--<div my="red"></div>-->
+				
+				<ul class="list-group" my ng-repeat="data in data">
+					<li class="list-group-item"  ng-bind="data.name" ></li>
+				</ul>
+				<!--<div my-hello ng-repeat="x in [1,2,3,4,5]"></div>-->
+				
+			</div>
+		</div>
+	</div >
+	<!--ng-include-->
+
+	
+</body>
+
+<script src="angular.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	//compile函数repeat只执行一次，
+	//link函数用一次指令就执行一次
+	//compile函数写了后就不执行link   compile返回的函数其实就是link函数
+	var app=angular.module("myapp",[]);
+	
+	app.directive("myHello",function(){
+		return {
+			restrict:'EA',
+			template:'<p>hello world</p>',
+			replace:true,
+			compile:function(element,attrs){
+				//element 使用指令的jqlit dom元素
+				//attrs 可以得到element上使用的属性及值
+				console.log('compile...');
+				console.log(element);
+				console.log(attrs);
+			}	
+				
+//				return function(){
+//					console.log('link....')
+//				}
+//			},
+//			link:function(scope,element,attrs){
+//				//scope就是指令所处的作用域对象
+//				/*console.log(scope)
+//				console.log('link....')*/
+//			}
+			
+		}
+	})
+	
+	//自己设置
+	app.directive("my",function(){
+		return{
+			restrict:'EA',
+			template:'<p>这是我的<span ng-transclude></span></p>',
+			replace:true,
+			transclude:true,
+//			compile:function(element,attrs){
+//				/*console.log( attrs.color )
+//				console.log( attrs.content )*/
+//				/*console.log( element )
+//				console.log( attrs )*/
+//				console.log('compile')
+//				element.css({
+//					color:attrs.color
+//				})
+//			}
+			link:function(scope,element,attrs){
+				console.log('link')
+			}
+		}
+	})
+	
+	
+	
+	
+	
+	/*app.directive("myRed",function(){
+		return {
+			restrict:'EA',
+			compile:function(element,attrs){
+				console.log( element )
+				element[0].innerHTML="哈哈哈";
+				element.css({
+					color:'skyblue'
+				})
+			}
+		}
+	})*/
+	/*app.directive("myRedt",function(){
+		return {
+			restrict:'EA',
+			template:'<div >5555<span ng-transclude></span></div>',
+			replace:true,
+			transclude:true,
+			compile:function(element,attrs){
+				console.log( attrs )
+				element.css({
+					color:'gold'
+				})
+			}
+		}
+	})
+	
+	app.directive("myColor",function(){
+		return {
+			restrict:'EA',
+			compile:function(element,attrs){
+//				console.log(attrs)
+				element[0].innerHTML=attrs.myColor;
+				element.css({
+					color:attrs.myColor
+				})
+			}
+		}
+	})*/
+	
+	
+	app.controller("myController",function($scope){
+		
+			$scope.data =[
+							{
+								"name":"王小花",
+								"tel":15765892145,
+								"id":1
+							},
+							{
+								"name":"二狗子",
+								"tel":13158479625,
+								"id":2
+							},
+							{
+								"name":"大狗子",
+								"tel":18757896325,
+								"id":3
+							},
+							{
+								"name":"狗爸",
+								"tel":15245879632,
+								"id":4
+							},
+							{
+								"name":"惠芬",
+								"tel":15621458963,
+								"id":5
+							}
+						];
+						
+		console.log( $scope.data )
+		
+	})
+	
+</script>
+</html>

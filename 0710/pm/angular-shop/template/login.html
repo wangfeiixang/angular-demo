@@ -1,0 +1,29 @@
+
+
+<div class="login-view">
+	
+	<div class="panel panel-primary form-box col-xs-12 col-sm-6 col-sm-offset-3">
+		<div class="panel-heading">登陆：</div>
+		<div class="panel-body">
+			<div class="label label-info" ng-bind="message"></div>
+			<hr />
+			<form ng-submit="login()">
+				<div class="form-group">
+					<label for="">用户名：</label>
+					<input ng-model="uname" type="text" class="form-control" />
+				</div>
+				<div class="form-group">
+					<label for="">密码：</label>
+					<input  ng-model="upass" type="password" class="form-control" />
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-success">提交</button>
+					<button type="reset" class="btn btn-default">重置</button>
+					<my-link to="register"  class="btn btn-info">去注册</my-link>
+					<my-link to="main"  class="btn btn-info">返回首页</my-link>
+				</div>
+			</form>
+		</div>
+	</div>
+	
+</div>

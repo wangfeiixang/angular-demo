@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>Document</title>
+	<link rel="stylesheet" type="text/css" href="../js/bootstrap.min.css"/>
+	<script src="../js/react.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/react-dom.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/browser.min.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">知识点：</div>
+			<div class="panel-body">
+				
+				<p>父组件将自己的状态传递给子组件，子组件在属性里接受，当父组件改变自己状态的时候，子组件的属性也会改变</p>
+				
+			</div>
+		</div>
+	</div>
+	<style type="text/css">
+		.box{
+			width: 320px;
+			height: 200px;
+			margin: 0 auto;
+			border:1px solid #333
+		}
+		.left{
+			float: left;
+			width: 30%;
+			height: 100%;
+			border-right:1px solid #ccc;
+		}
+		.left .nav{
+			width: 100%;
+			padding: 10px;
+			border-bottom: 1px solid #ccc;
+			text-align: center;
+			cursor: pointer;
+		}
+		
+		.right{
+			float: right;
+			width: 70%;
+			height: 100%;
+			overflow: hidden;
+			position: relative;
+			/*background: #f7f7f7;*/
+		}
+	</style>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">效果：</div>
+			<div class="panel-body">
+				这里是我们的组件：
+				<hr />
+				<div id="hello"></div>
+				<hr />
+				<div id="hello1"></div>
+			</div>
+		</div>
+	</div>
+
+	<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+	<script src="../js/iscroll.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/babel">
+		var Father = React.createClass({
+			getInitialState:function(){
+				return {
+					navs:null
+				}
+			},
+			getData:function () {
+				var that = this;
+				$.ajax({
+					url:"json/detail.json",
+					dataType:"jsonp",
+					success:function (data) {
+						console.log(data);
+						that.setState({
+							navs:data
+						})
+					}
+				})
+			},
+			componentWillMount:function () {
+				console.log(1)
+
+				//this.getData();
+				var that = this;
+				$.ajax({
+					url:"json/detail.json",
+					dataType:"jsonp",
+					success:function (data) {
+						console.log(1)
+						console.log(data);
+
+					}
+				})
+				//console.log(this.state.navs)
+			},
+
+			render:function(){
+				//console.log(this.state.navs)
+				return (
+					<div className="box clearfix">
+						<div className="left pull-left">
+							555
+						</div>
+						<Right ref="right"/>
+					</div>
+				)
+			}
+		})
+		
+		var Right = React.createClass({
+			getInitialState:function(){
+				return {
+					details:null
+				}
+			},
+
+			render:function(){
+
+				return (
+
+					<div className="right pull-right" id="wrapper">
+						<div>
+						666
+						</div>
+					</div>
+				)
+			}
+		})
+		
+		
+		
+		
+		ReactDOM.render(<Father/>,document.getElementById('hello'));
+	</script>
+</body>

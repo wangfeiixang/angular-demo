@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <title>Title</title>
+</head>
+<body>
+    <div class="container" ng-controller="myController">
+        <div class="panel panel-primary">
+            <div class="panel-body">
+                正在进行
+                <input type="text" ng-model="content">
+                <hr/>
+                <p ng-hide="type" data-id="{{!type}}">
+                    <input  type="checkbox" ng-model="type"><span ng-bind="content"></span>
+                    <span ng-click="change()">删除</span>
+                </p>
+
+
+
+
+            </div>
+            <div class="panel-body">
+                已经完成
+                <hr/>
+                <p ng-show="type">
+                    <input  type="checkbox" ng-model="type"><span ng-bind="content"></span>
+                    <span ng-click="change()">删除</span>
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+   
+    
+    
+    
+    
+    
+</body>
+<script src=angular.min.js></script>
+<script>
+    var app = angular.module("myApp",[]);
+
+   /* app.directive("geLi",function () {
+        restrict:"A",
+        scope:{}
+
+
+    })*/
+
+
+
+
+    app.controller("myController",function ($scope) {
+
+        $scope.change = function () {
+            $scope.content="";
+        }
+
+
+
+    })
+</script>
+</html>

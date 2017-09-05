@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html ng-app="myapp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css"/>
+    
+</head>
+<body>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				知识点：
+			</div>
+			<div class="panel-body">
+				<p></p>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				效果：
+			</div>
+			<div class="panel-body">
+				<div ng-controller="myController">
+					<!--<input my-model="word" type="text" class="form-control" />-->
+					<input my='word' type="text"  class="form-control"/>
+					<p>{{word}}</p>
+					<button my-click="change" class="btn btn-success">按钮</button>
+				</div>
+			</div>
+		</div>
+	</div >
+	<!--ng-include-->
+
+	
+</body>
+
+<script src="angular.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	//compile函数repeat只执行一次，
+	//link函数用一次指令就执行一次
+	//compile函数写了后就不执行link   compile返回的函数其实就是link函数
+	var app=angular.module("myapp",[]);
+	
+//	ng-model
+
+	app.directive('my',function(){
+		return{
+			restrict:'A',
+			link:function(scope,element,attrs){
+				/*console.log( attrs )
+				console.log( scope.word )*/
+				element[0].value = scope[attrs.my];
+				element[0].oninput = function(e){
+					
+					//console.log(1)
+					
+					scope[attrs.my] = e.target.value;
+					
+					scope.$apply();
+					
+				}
+				
+			}
+		}
+	})
+
+	
+	app.directive("myModel",function(){
+		return {
+			restrict:'A',
+			link:function(scope,element,attrs){
+				//console.log( scope )
+				element[0].value=scope[attrs.myModel]
+				element[0].oninput=function(e){
+					scope[attrs.myModel]=e.target.value;
+					scope.$apply()
+				}
+			}
+		}
+	})
+	
+	
+	app.directive("myClick",function(){
+		return {
+			restrict:'A',
+			link:function(scope,element,attrs){
+				console.log( attrs )
+				element[0].onclick=function(e){
+					scope[attrs.myClick]()
+					scope.$apply()
+				}
+			}
+		}
+	})
+	
+	
+	
+	
+	
+	app.controller("myController",function($scope){
+		$scope.word="hello11";
+		$scope.change=function(){
+			$scope.word='hello world';
+		}
+	})
+	
+</script>
+</html>

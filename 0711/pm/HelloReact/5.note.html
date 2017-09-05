@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>Document</title>
+	<link rel="stylesheet" type="text/css" href="../bootstrap.min.css"/>
+	<script src="react.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="react-dom.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="browser.min.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">知识点：</div>
+			<div class="panel-body">
+				<p>组件里dom中的注释的写法：</p>
+				<pre>
+{/*注释...*/}
+				</pre>
+			</div>
+		</div>
+	</div>
+
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">效果：</div>
+			<div class="panel-body">
+				这里是我们的组件：
+				<hr />
+				<div id="hello"></div>
+				<div id="js"></div>
+			</div>
+		</div>
+	</div>
+	
+	
+	<script type="text/babel">
+		
+		var Hello=React.createClass({
+			render:function(){	
+				
+				return (
+					<div id="odiv">
+						<div className="odiv">
+							<ul>
+								<li>
+									<h4>hello world</h4>
+									<p>hello world!!!!!!!!!</p>
+								</li>
+							</ul>
+						</div>
+						
+						{/*abc*/}
+						
+					</div>
+				)
+			}
+		})
+		
+		
+		ReactDOM.render(<Hello/>,document.getElementById('hello'))
+		
+		
+//		var world=React.createElement('div',{id:'odiv'},
+//			React.createElement('div',{className:'odiv'},
+//				React.createElement('ul',null,
+//					React.createElement('li',null,
+//						React.createElement('h4',null,'hello world'),
+//						React.createElement('p',null,'hello world!!!!!!!!!')
+//					)
+//				)
+//			)
+//		)
+//		ReactDOM.render(world,document.getElementById('js'))
+		
+		
+		
+		
+//		var div=React.createElement("div",{className:'div1'},
+//			React.createElement("div",{className:'div2'},"aaaa")
+//		);
+//
+		
+	</script>
+</body>

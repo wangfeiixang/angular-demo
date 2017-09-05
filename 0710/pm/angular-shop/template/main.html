@@ -1,0 +1,50 @@
+
+<div class="main-view">
+	
+	<p class="text-info">欢迎光临羊驼水果店。</p>
+
+	<p class="text-info">请选择您要的产品并将其添加到您的购物车。</p>
+	
+	<p class="text-info">当您完成后，请单击“购物车图标”来查看您的订单信息。</p>
+	
+	<p class="text-info">搜索:</p>
+	
+	<input ng-model="filterby" type="text" class="form-control" />
+	
+	
+	<div class="panel panel-default good-box">
+		<div class="panel-heading">
+			商品列表
+			
+			<my-link to="car" class="pull-right">
+				<span class="glyphicon glyphicon-shopping-cart"></span>
+				<span ng-bind="allInfo.all_num"></span>件，
+				<span ng-bind="allInfo.all_price | currency :'￥'">s</span>
+			</my-link>
+		</div>
+		
+		<div class="panel-body" id="wrapper">
+			<table class="table table-bordered">
+				<tr>
+					<th>图片</th>
+					<th>介绍</th>
+					<th>价格</th>
+					<th>操作</th>
+				</tr>
+				<tr my-finished="finished" ng-repeat = "good in dataList | myFilter : filterby">
+					<td><img ng-src="{{good.imgUrl}}"/></td>
+					<td class="text-left">
+						<my-link to="{{'detail/'+good.id}}" ng-bind="good.name"></my-link>
+						<p ng-bind="good.description"></p>
+					</td>
+					<td ng-bind="good.price | currency : '￥'"></td>
+					<td>
+						<button ng-click="addGood(good.id,good.name,good.price)" class="btn btn-danger">加入购物车</button>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	
+</div>
+

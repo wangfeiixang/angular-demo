@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" type="text/css" href="../js/bootstrap.min.css"/>
+	<script src="../js/react.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/react-dom.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/browser.min.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">知识点：</div>
+			<div class="panel-body">
+				
+				<p>父组件将自己的状态传递给子组件，子组件在属性里接受，当父组件改变自己状态的时候，子组件的属性也会改变</p>
+				
+			</div>
+		</div>
+	</div>
+
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">效果：</div>
+			<div class="panel-body">
+				这里是我们的组件：
+				<hr />
+				<div id="hello"></div>
+				<hr />
+				<div id="hello1"></div>
+			</div>
+		</div>
+	</div>
+	<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+	<script type="text/babel">
+		var  Father = React.createClass({
+			getInitialState:function () {
+				return{
+					city:"beijing"
+				}
+			},
+			change:function (city) {
+				this.setState({
+					city:city
+				})
+			},
+			render:function () {
+
+				return(
+						<div>
+							<button onClick={this.change.bind(this,"beijing")} className="btn btn-success">北京</button>
+							<button onClick={this.change.bind(this,"shanghai")}  className="btn btn-success">上海</button>
+							<hr/>
+							<p>{this.state.city}</p>
+							<hr/>
+							<Son city={this.state.city} />
+
+						</div>
+				)
+			}
+
+		})
+
+		var Son = React.createClass({
+			getInitialState:function () {
+				return{
+					movies:[]
+				}
+			},
+			componentWillMount:function () {
+				this.getData(this.props);
+			},
+			componentWillReceiveProps:function (props) {
+				this.getData(props);
+			},
+			getData:function (props) {
+				var that = this;
+				$.ajax({
+					url:props.city+'.json',
+					success:function(result){
+						that.setState({
+							movies:result
+						})
+					}
+				})
+			},
+			getMovies:function () {
+				//console.log(155)
+				var arr = [];
+				if (this.state.movies.length){
+					this.state.movies.forEach(function (movie,index) {
+						arr.push(<li className="list-group-item" >{movie}</li>);
+					})
+				}
+				return arr;
+
+			},
+			render:function () {
+				return(
+						<div>
+							<ul className="list-group">
+								<li className="list-group-item">{this.props.city}</li>
+								<hr/>
+								{this.getMovies()}
+							</ul>
+
+						</div>
+				)
+			}
+		})
+
+		ReactDOM.render(<Father/>,document.getElementById("hello"))
+
+
+
+	</script>
+
+
+
+
+</body>
+</html>

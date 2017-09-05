@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html ng-app="myapp">
+	<head>
+		<meta charset="UTF-8">
+		<title>angular 商店</title>
+		<link rel="stylesheet" type="text/css" href="base/boot/css/bootstrap.min.css"/>
+		<link rel="stylesheet" type="text/css" href="css/app.css"/>
+	</head>
+	<body ng-controller="appController">
+		<header class="container">
+			<div class="panel panel-primary ">
+				<div class="panel-body head-content clearfix">
+					<img class="logo img-thumbnail pull-left" src="img/logo.jpg"/>
+					<div class="head-box pull-right">
+						<div ng-show="appdata.username" class="userinfo-box ">
+							欢迎<span ng-bind="appdata.username"></span>回来 &nbsp;&nbsp;
+							<button ng-click="exit()" class="btn btn-success">注销</button>
+						</div>
+						<div ng-hide="appdata.username" class="loginbtn-box">
+							<a href="#/login" class="btn btn-success">登陆</a>&nbsp;&nbsp;
+							<a href="#/register" class="btn btn-success">注册</a>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+		</header>
+		
+		
+		<section ng-view class="container">
+			
+		</section>
+		
+	</body>
+	<script src="base/angular.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="base/angular-route.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/app.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/service.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/filter.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/controller.js" type="text/javascript" charset="utf-8"></script>
+	
+</html>

@@ -1,0 +1,81 @@
+
+
+/*header*/
+
+header .logo{
+	width: 200px;
+}
+
+header .right{
+	height: 88px;
+	display: flex;
+	align-items: center;
+}
+header .right .info-box{
+	display: flex;
+	align-items: center;
+}
+header  .info-box p{
+	margin: 0;
+}
+
+
+/*login,register*/
+
+.form-box{
+	padding: 0;
+}
+
+
+/*main*/
+
+.main-view a{
+	cursor: pointer;
+}
+
+.main-view .good-box{
+	margin-top: 15px;
+}
+
+.main-view table td,.main-view table th{
+	text-align: center;
+}
+.main-view table td:nth-child(2){
+	text-align: left;
+}
+
+
+#wrapper{
+	height:600px;
+	overflow: hidden;
+	position: relative;
+}
+
+
+
+/*detail*/
+
+.detail-view .info-table{
+	padding: 0;
+}
+.detail-view .btn-box>*{
+	display: block;
+	width: 50%;
+	margin: 0 auto 15px;
+}
+
+
+/*car*/
+
+.car-view .num{
+	margin: 0px 15px;
+}
+.car-view .info-table{
+	padding: 0;
+	margin-top: 15px;
+}
+.car-view .btn-box>*{
+	display: block;
+	width: 50%;
+	margin: 0 auto 15px;
+}

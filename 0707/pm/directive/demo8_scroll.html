@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html ng-app="myapp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css"/>
+    
+</head>
+<style type="text/css">
+	.content{
+		height: 200px;
+		overflow: hidden;
+		position: relative;
+	}
+</style>
+<body>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				知识点：
+			</div>
+			<div class="panel-body">
+				<p></p>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				效果：
+			</div>
+			<div class="panel-body">
+				<div ng-controller="myController" class="content" id="wrapper">					
+					
+					<ul class="list-group">
+						<li class="list-group-item" my-finish="x" ng-repeat="x in dataList">{{x}}</li>
+					</ul>
+					
+					
+				</div>
+				
+			</div>
+		</div>
+	</div >
+	<!--ng-include-->
+
+	
+</body>
+
+<script src="angular.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="iscroll.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	var app=angular.module("myapp",[]);
+
+	/*var myScroll;
+	function loaded(){
+		setTimeout(function(){
+			myScroll=new iScroll("wrapper",{
+				hScroll:false,
+				vScrollbar:true,
+				bounce:true
+			})
+		},100);
+	}
+	window.addEventListener("DOMContentLoaded",loaded,false);*/
+
+	app.directive("myFinish",function(){
+		return {
+			restrict:'A',
+			link:function(scope,element,attr){
+				//console.log( attr )
+				if( scope.$last && scope.x.classID==13 ){//.x.classID
+					var myScroll=new iScroll("wrapper");
+					setTimeout(function(){
+						myScroll.refresh();
+					},100)
+					//scope.$apply();//为什么可以不用脏数据检测，有脏数据控制台报错
+				}
+				console.log(scope.x.classID)
+			}
+		}
+	})
+
+
+
+	app.controller("myController",function($scope,$http){
+		$scope.dataList=[];
+
+		$http({
+			url:'http://datainfo.duapp.com/shopdata/getclass.php',
+			method:'get',
+			params:{
+				a:1,
+				b:2
+			}
+		}).success(function(data){
+			$scope.dataList=data;
+			console.log( '加载完了' )
+			//myScroll.refresh();
+//			setTimeout(function(){
+//				var myScroll=new iScroll("wrapper");
+//			},100)
+		}).error(function(err){
+			console.log(err)
+		})
+	})
+	
+
+	
+	
+</script>
+</html>

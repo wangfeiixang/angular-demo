@@ -1,0 +1,13 @@
+
+
+<div class="list-block">
+    <ul>
+      <li ng-click="pageTo('detail/'+friend.id)"  class="item-content item-link" ng-repeat="friend in friends">
+        <div class="item-media"><i class="icon icon-me"></i></div>
+        <div class="item-inner">
+          <div class="item-title" ng-bind="friend.name"></div>
+          <div class="item-after" ng-bind="friend.tel" ></div>
+        </div>
+      </li>
+    </ul>
+  </div>

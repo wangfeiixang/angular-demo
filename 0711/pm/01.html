@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css"/>
+    <script src="HelloReact/react.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="HelloReact/react-dom.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="HelloReact/browser.min.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+<div id="app"></div>
+<script type="text/babel">
+    var App=React.createClass({
+        getName:function(){
+        if(this.props.name){
+        return this.props.name;
+        }else{
+        return 'world'
+        }
+        },
+        render:function(){
+        var name=this.getName();
+        return (
+            <div>
+                <span>Hello,{this.props.name?this.props.name:'world'}</span><br/>
+                <span>Hello,{name}</span><br/>
+                <span>Hello,{this.getName()}</span><br/>
+                <span>Hello,{this.props.name||'name'}</span><br/>
+                <span>Hello,
+                {(function(obj){
+                if(obj.props.name){
+                return obj.props.name;
+                }else{
+                return 'world'
+                }
+                })(this)}
+                </span><br/>
+            </div>
+            )
+        }
+            })
+
+var props={name:"allen",age:18};
+
+ReactDOM.render(<App {...props}/>,document.getElementById('app'))
+</script>
+</body>
+</html>

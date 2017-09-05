@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>Document</title>
+	<link rel="stylesheet" type="text/css" href="../bootstrap.min.css"/>
+	<script src="react.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="react-dom.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="browser.min.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">知识点：</div>
+			<div class="panel-body">
+				<p>1.给组件里的dom添加事件的时候，在行内我们写成小驼峰的写法:click->onClick</p>
+				<p>2.值用{}来包裹，里面放入一个事件处理函数</p>
+				<p>3.可以将事件处理 函数设置成组件的一个方法或者组件原型的一个方法，这是我们推荐的</p>
+			</div>
+		</div>
+	</div>
+	
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">效果：</div>
+			<div class="panel-body">
+				这里是我们的第一个组件：
+				<hr />
+				<div id="hello"></div>
+				<div id="hello1"></div>
+			</div>
+		</div>
+	</div>
+	
+
+		<!--<div>
+			<button class="btn btn-success"></button>
+			<button class="btn btn-danger"></button>
+			<button class="btn btn-warning"></button>
+			<button class="btn btn-info"></button>
+			<button class="btn btn-primary"></button>
+		</div>-->
+
+	
+	<script type="text/babel">
+		//编写了一个组件	
+		
+		var Hello = React.createClass({
+			handleClick:function(){
+				alert('click!!!')
+			},
+			handleDoubleClick:function(){
+				alert('doubleclick!!!')
+			},
+			handleKeyUp:function(){
+				alert('handleKeyUp!!!')
+			},
+			render:function(){
+				return (
+					<div>
+						<button onClick={this.handleClick}  className="btn btn-success">click</button>
+						<button onDoubleClick={this.handleDoubleClick}  className="btn btn-danger">click</button>
+						<input type="text" onKeyUp={this.handleKeyUp}/>
+					</div>
+				)
+			}
+		})
+		
+		function handleClick(){
+			alert('click!!!')
+		}
+		
+		
+		ReactDOM.render(<Hello/>,document.getElementById("hello"))
+//		ReactDOM.render(<Hello/>,document.getElementById("hello1"))
+		
+	</script>
+</body>
+</html>

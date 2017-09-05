@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>Document</title>
+	<link rel="stylesheet" type="text/css" href="../js/bootstrap.min.css"/>
+	<script src="../js/react.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/react-dom.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/browser.min.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">知识点：</div>
+			<div class="panel-body">
+				<p>使用状态也可以挂载数据</p>
+				<p>通过getInitialState方法来给组件挂载状态，并且在组件内部通过this.state去获取</p>
+				<p>通过setState来设置状态，因为直接更改状态，状态实质上已经改变了，但是没有触发render的重新渲染</p>
+				<p>状态只能组件内部自己设置，自己更改</p>
+			</div>
+		</div>
+	</div>
+
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">效果：</div>
+			<div class="panel-body">
+				这里是我们的组件：
+				<hr />
+				<div id="hello"></div>
+				<hr />
+
+			</div>
+		</div>
+	</div>
+	
+	
+	<script type="text/babel">
+		
+		var Gouzi = React.createClass({
+			getInitialState:function(){
+				return {
+					doing:'学习...'
+				}
+			},
+			goToPlay:function(){
+//				this.state.doing="玩游戏..."
+				console.log(1);
+//				this.setState({
+//					doing:'玩游戏....'
+//				})
+			},
+			render:function(){
+				//console.log('render...')
+				return (
+					<div>
+						<p>我是{this.props.name}--<button onClick={this.goToPlay} className="btn btn-info">去玩游戏</button></p>
+						<p>我正在{this.state.doing}</p>
+					</div>
+				)
+			}
+		})
+		ReactDOM.render(<Gouzi name={"二狗"}/>,document.getElementById('hello'))
+		
+	</script>
+</body>
