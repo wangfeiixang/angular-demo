@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html ng-app="app">
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="mui.min.css" rel="stylesheet" />
+	</head>
+	<style type="text/css">
+		html,body{
+			height: 100%;
+		}
+		li,ul,ol{
+			list-style: none;
+		}
+		*{
+			padding: 0;
+			margin: 0;
+		}
+		li{
+			background: #fff;
+			margin: 5px 0;
+			border-radius: 5px;
+		}
+		.card{
+			display: flex;
+			justify-content: space-between;
+		}
+		.card button{
+			flex-grow: 1;
+			flex-shrink: 1;
+			margin-right: 5px;
+		}
+		.card .last{
+			margin-right: 0;
+		}
+	</style>
+
+	<body>
+		
+		<div class="mui-content ">
+			<div class="mui-content-padded" ng-controller="myController">
+				<input type="search" name="" id="" value="" />
+				<div class="mui-card card">
+					<button class="mui-btn mui-btn-blue">价格</button>
+					<button class="mui-btn mui-btn-success">人气</button>
+					<button class="mui-btn mui-btn-danger last">销量</button>
+				</div>
+				<ul ng-repeat="data in dataList | orderBy : 'parseInt(price)' : change[0].isTrue[0] "> 
+					<li ng-bind="data.name"></li>
+					<li ng-bind="'价格：'+data.price+'&nbsp;&nbsp;人气：'+data.hot+'&nbsp;&nbsp;销量:'+data.sale"></li>
+				</ul >
+				<p>{{change[0].price}} --{{change[0].isTrue[0]}}</p>
+			</div>
+			
+			
+		</div>
+		
+		<script src="angular.min.js"></script>
+		<script type="text/javascript">
+			
+			var app = angular.module("app",[]);
+			
+			app.controller("myController",function($scope){
+				
+				//$scope.name = "王";
+				
+				$scope.dataList=[
+		    		{name:"iphone7",price:"5000",hot:97,sale:1500},    		
+		    		{name:"小米4",price:"2999",hot:68,sale:3001},
+		    		{name:"iphone6",price:"4000",hot:95,sale:2200},
+		    		{name:"华为荣耀3C",price:"3500",hot:101,sale:4125},
+		    		{name:"OPPOR9",price:"300",hot:10,sale:4366},
+		    		{name:"iphone5",price:"1500",hot:66,sale:2516},
+		    		{name:"SUMSUNG",price:"1999",hot:55,sale:2},
+		    		{name:"NOKIA",price:"1499",hot:60,sale:623},
+		    		{name:"iphone4s",price:"700",hot:55,sale:1866}
+		    	];
+		    	//$scope.num = parseInt();
+		    	
+		    	$scope.parseInt = function(num){
+		    		return parseInt(num);
+		    	}
+		    //	console.log( $scope.parseInt("555","5444") )
+		    	angular.forEach($scope.dataList,function(value,index){
+		    		
+			    		$scope.change=[{
+			    		price:parseInt(value.price),
+			    		isTrue:['true','false']
+			    	},{
+			    		hot:parseInt(value.hot),
+			    		isTrue:['true','false']
+			    	},{
+			    		sale:parseInt(value.sale),
+			    		isTrue:['true','false']
+			    	}];
+		    		
+		    	//	console.log( $scope.change[0].price )
+		    		
+		    	})
+		    	
+				
+				
+			})
+			
+			
+			
+			
+			
+			
+		</script>
+	</body>
+
+</html>

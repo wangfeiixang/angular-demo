@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html ng-app="myapp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css"/>
+    <!--<link rel="stylesheet" type="text/css" href="load.css"/>-->
+</head>
+<style>
+	.spinner {
+	  margin: 100px auto;
+	  width: 90px;
+	  height: 90px;
+	  position: relative;
+	  text-align: center;
+	   
+	  -webkit-animation: rotate 2.0s infinite linear;
+	  animation: rotate 2.0s infinite linear;
+	}
+	 
+	.dot1, .dot2 {
+	  width: 60%;
+	  height: 60%;
+	  display: inline-block;
+	  position: absolute;
+	  top: 0;
+	  background-color: #67CF22;
+	  border-radius: 100%;
+	   
+	  -webkit-animation: bounce 2.0s infinite ease-in-out;
+	  animation: bounce 2.0s infinite ease-in-out;
+	}
+	 
+	.dot2 {
+	  top: auto;
+	  bottom: 0px;
+	  -webkit-animation-delay: -1.0s;
+	  animation-delay: -1.0s;
+	}
+	 
+	@-webkit-keyframes rotate { 100% { -webkit-transform: rotate(360deg) }}
+	@keyframes rotate { 100% { transform: rotate(360deg); -webkit-transform: rotate(360deg) }}
+	 
+	@-webkit-keyframes bounce {
+	  0%, 100% { -webkit-transform: scale(0.0) }
+	  50% { -webkit-transform: scale(1.0) }
+	}
+	 
+	@keyframes bounce {
+	  0%, 100% {
+	    transform: scale(0.0);
+	    -webkit-transform: scale(0.0);
+	  } 50% {
+	    transform: scale(1.0);
+	    -webkit-transform: scale(1.0);
+	  }
+	}
+	
+	.weather-box{
+		position: relative;
+	}
+	.spinner{
+		position: absolute;
+		left: 0;top: 0;
+		right: 0;bottom: 0;
+		z-index: 9999;
+		margin: auto;
+	}
+	
+</style>
+<body>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				知识点：
+			</div>
+			<div class="panel-body">
+				<p>1.angular的$http服务也可以做jsonp跨域请求</p>
+				<p>2.需要将method设置成jsonp，并且在数据接口后面添加字段callback=JSON_CALLBACK</p>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				效果：
+			</div>
+			<div class="panel-body weather-box" ng-controller="infoController" >
+				<div ng-hide="canSearch" class="spinner">
+				  <div class="dot1"></div>
+				  <div class="dot2"></div>
+				</div>
+				<form >
+					
+					<input ng-model="city" type="text" class="form-control" style="width: 200px;display: inline-block;" />
+					<button ng-click="search()" class="btn btn-success">查询</button>
+					
+					<hr />
+					
+					<p>
+						今天是：<span ng-bind="weather.date"></span>(<span ng-bind="weather.city"></span>) &nbsp;&nbsp;
+						 PM2.5:<span ng-bind="weather.pm25"></span>&nbsp;&nbsp; <span ng-bind="weather.air"></span> 
+					</p>
+					
+					<hr />
+					<ul class="list-group" ng-repeat=" data in weather.weather">
+						<li class="list-group-item" ng-bind="data.date"></li>
+						<li class="list-group-item" ng-bind="data.temp"></li>
+						<li class="list-group-item" ng-bind="data.weather"></li>
+						<li class="list-group-item"  ng-bind="data.wind">日期：...</li>
+					</ul>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+
+	
+</body>
+<script src="angular.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	var app=angular.module("myapp",[]);
+	app.controller("infoController",function($scope,$http,$timeout){
+//		http://api.asilu.com/weather/
+//		如果数据还没获取回来的时候不能再次请求
+//      如果再次获取数据的城市和当前城市一样的话，判断时间间隔
+		$scope.city='北京';		
+		$scope.searchTime=0;//记录上次请求的时间
+		$scope.canSearch=true;	//判断此次数据有没有请求完成	
+		$scope.search=function(){//请求数据的逻辑			
+			if( !$scope.canSearch ){//如果上次数据还没有请求完成，就不能再次发送请求
+				return ;
+			}
+			//如果上次请求的城市和此次的城市一样，并且时间间隔小于10s，也不能发送请求
+			if( $scope.weather&&$scope.weather.city==$scope.city ){
+				var now = Math.floor(new Date().getTime()/1000); 
+				if(now-$scope.searchTime<=10){
+					return ;
+				}
+				
+			}
+			
+			$scope.canSearch=false;
+			
+			$scope.searchTime=Math.floor(new Date().getTime()/1000);
+			
+			$http({
+				url:'http://api.asilu.com/weather/?callback=JSON_CALLBACK',
+				method:"jsonp",
+				params:{
+					city:$scope.city
+				}
+			}).success(function(data){
+				console.log(data);
+				$timeout(function(){
+					$scope.weather=data;
+					$scope.weather.air=turnPM(data.pm25)
+					$scope.canSearch=true;		
+				},1000)
+						
+			})
+		}
+		$scope.search()
+		
+		
+	})
+	
+	
+	function  turnPM(pm){
+		var air=""
+		if(pm<35){
+			air="优";
+		}else if(pm>=35&&pm<75){
+			air="良";
+		}else if(pm>=75&&pm<115){
+			air="轻度污染";
+		}else if(pm>=115&&pm<150){
+			air="中度污染";
+		}else if(pm>=150&&pm<250){
+			air="重度污染";
+		}else if(pm>=250){
+			air="严重污染";
+		}
+		return air;
+	}
+</script>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html ng-app="myapp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css"/>
+    
+</head>
+<body>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				知识点：
+			</div>
+			<div class="panel-body">
+				<p>1.ng-bind存在功能缺陷，不能像表达式一样显示数据的同时加入其他的字符</p>
+				<p>2.ng-bing-template可以做到这一点，但是不能显示标签</p>
+				<p>3.ng-bind-html，可以显示，文本信息里的html标签，但是这个指令存在于ngSanitize模块里，如果要使用的话，需要引入这个模块，并且需要把数据在$scope上挂载之后才能显示</p>
+				<p>4.使用表达式的方法如下(使用ng-non-bindable可以让表达式不解析)：<span ng-non-bindable>{{word}}</span></p>
+				<p>5.使用ng-include可以引入一个模板里的代码片段，使代码重复利用</p>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				效果：
+			</div>
+			<div class="panel-body" ng-controller="infoController">
+				<p>姓名：{{name}}</p>
+				<p ng-bind="name"></p>
+				<p ng-bind-template="<b>姓名：{{name}}</b>"></p>
+				<p ng-bind-html="html"></p>
+			</div>	
+			
+		</div>
+	</div>
+	
+
+	
+</body>
+
+
+
+<script src="./angular.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="./angular-sanitize.js" type="text/javascript" charset="utf-8"></script>
+	
+<script type="text/javascript">
+	
+
+	var app=angular.module("myapp",['ngSanitize']);
+	
+	app.controller("infoController",function($scope){
+		$scope.name="allen";	
+		$scope.html="<b>姓名："+$scope.name+"</b>"
+	})
+	
+	
+</script>
+</html>

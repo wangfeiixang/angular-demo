@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+	</body>
+	<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+	<script type="text/javascript">
+		$.ajax({
+			type:"get",
+			url:"https://api.asilu.com/mgtv/",
+			data:{
+				id:3394357
+			},
+			dataType:"jsonp",
+			success:function(data){
+				console.log(data);
+			},
+			error:function(){
+				console.log("错误")
+			}
+		});
+	</script>
+</html>

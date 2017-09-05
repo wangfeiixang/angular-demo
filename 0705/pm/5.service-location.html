@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html ng-app="myapp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css"/>
+    
+</head>
+<body>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				知识点：
+			</div>
+			<div class="panel-body">
+				<p>1.angular提供了$location服务，可以获取到当前项目服务器环境的域名、端口、协议、哈希值。哈希值也可以设置</p>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				效果：
+			</div>
+			<div class="panel-body" ng-controller="infoController">
+				
+			</div>
+		</div>
+	</div>
+	
+
+	
+</body>
+
+<script src="angular.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	var app=angular.module("myapp",[]);
+	app.controller("infoController",function($scope,$location){
+//		console.log($location.absUrl(),'绝对路径');
+//		console.log($location.port(),'端口');
+//		console.log($location.protocol(),'协议');
+//		console.log($location.host(),'域名')	;
+		
+		console.log( $location.absUrl() )
+		console.log( $location.port() )
+		console.log( $location.protocol() )
+		console.log( $location.host() )
+		
+		
+		//可以获取hash值  还可以设置hash值
+		console.log($location.path());
+		//前端路由：通过hash的改变来切换不同的内容模板
+	})	
+	
+</script>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html ng-app="myapp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css"/>
+    
+</head>
+<body>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				知识点：
+			</div>
+			<div class="panel-body">
+				在ng-repeat的时候因为要循环的数据里可能有重复的数据，这个时候angular就会报错，使用track by
+				来让ng-repeat 把焦点放在一个不会变的东西上 $index
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				效果：
+			</div>
+			<div class="panel-body" ng-controller="infoController">
+				<span ng-repeat-start="num in numArr ">
+					{{num}}
+				</span>
+				<br ng-repeat-end />
+			</div>
+		</div>
+	</div>
+	
+
+	
+</body>
+
+<script src="angular.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	var app=angular.module("myapp",[]);
+	
+	app.controller("infoController",function($scope){
+		$scope.numArr=[
+			{1:"1"},{1:"1"},{1:"1"},2,3,34
+		]
+	})
+</script>
+</html>

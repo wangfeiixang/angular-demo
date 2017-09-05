@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html ng-app="app">
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="bootstrap.min.css"/>
+	</head>
+	<body>
+		<div class="container">
+			<div class="panel panel-primary">
+				<div class="panel-heading" ng-bind="1+9"></div>
+				<div class="panel-body" ng-controller="mainController">
+					<p  >
+						<span ng-bind="name"></span> --<span ng-bind="1+6"></span>
+						-- <span ng-bind="age"></span>
+					</p>
+					<p ng-controller="main" ng-bind="name+'--'+age+'--'+index" ></p>
+					<h3 ng-controller="main" ng-init="name='飞'">
+						<button class="btn btn-success" ng-click="change()"></button>
+						<p ng-bind="family[index].name"></p>
+						<p ng-bind="family[index].age"></p>
+						<p ng-bind="name"></p>
+						
+					</h3>
+				</div>
+				<div class="panel-footer">
+					<span ng-bind="age"></span>
+					<!--<span ng-bind="last"></span>-->
+				</div>
+			</div>
+		</div>
+		
+	</body>
+	
+	<script src="angular.min.js" type="text/javascript" charset="utf-8"></script>
+	
+	<script>
+		
+		//ng-bind="firstName + ' ' + lastName"
+		
+		var app = angular.module("app",[]);//family[0].name
+		
+		app.controller("main",["$scope",function($scope){
+			
+			$scope.name = "军";
+			
+			$scope.age = 25;
+			
+			$scope.index =0;
+			
+			$scope.family =[
+			
+				{name:"大黄",age:"14"},
+				{name:"二黄",age:"12"},
+				{name:"三黄",age:"10"},
+			];
+		    var	isfalse = false;
+			$scope.change = function(){
+				if ( isfalse ) {
+					return;
+				} 
+				isfalse = true;
+				setTimeout(function(){
+					if ( $scope.index>=$scope.family.length-1 ) {
+						$scope.index = 0;
+					}else{
+						$scope.index++;
+					}
+					isfalse = false;
+				},1000)
+				 $scope.$apply();
+			}
+			
+			
+			
+			
+		}])
+		
+		
+		
+		
+		app.controller("mainController",['$scope','$http','$filter',function(a,b,c){
+			a.name="二狗子";
+			a.age = 18;
+//			b.mo = 11;
+		}])	
+		
+//		$rootScope.last ="hello";
+		
+		
+	</script>
+</html>

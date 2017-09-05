@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html ng-app="myapp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../base/bootstrap.min.css"/>
+    
+</head>
+<body>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				知识点：
+			</div>
+			<div class="panel-body">
+				<p>1.服务是angular里提供某种功能的机制，angular有自带的服务，我们也可以自定义服务，服务没有固定的数据类型</p>
+				<p>2.使用factory自定义服务：在回调函数里直接返回的就是真正的服务，可以返回任何数据类型的服务</p>
+				<p>3.service：在回调函数里可以给this上挂载属性和方法，angular会将该回调函数的实例化后的实例作为我们的服务，所以数据类型只能是object</p>
+				<p>4.provider：创建出来的服务拥有服务供应商，我们可以在使用前通过module.config对服务供应商进行配置，使我们的服务有不同的效果</p>
+				<p>5.在自定义的服务中，我们可以协助使用其他的服务</p>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				效果：
+			</div>
+			<div class="panel-body" ng-controller="infoController">
+				
+			</div>
+		</div>
+	</div>
+	
+	<!---->
+
+	
+</body>
+
+<script src="../base/angular.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	
+	var app=angular.module("myapp",[]);
+	//返回的数据类型是不固定的...
+	
+//	app.factory("123213",function(){
+//		return ..
+//	})
+
+	//provider  拥有服务供应商 ，可以通过对服务供应商的配置来使服务功能不同   数据类型是不固定的
+	
+	//service  会将回调函数实例化，实例就是服务本体    可以使用面向对象的写法去创建服务的功能  服务形态只能是对象
+
+	app.service("myService",function(){
+		
+	})
+	
+</script>
+</html>

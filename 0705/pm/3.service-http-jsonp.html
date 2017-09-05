@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html ng-app="myapp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css"/>
+    
+</head>
+<body>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				知识点：
+			</div>
+			<div class="panel-body">
+				<p>1.angular的$http服务也可以做jsonp跨域请求</p>
+				<p>2.需要将method设置成jsonp，并且在数据接口后面添加字段callback=JSON_CALLBACK</p>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				效果：
+			</div>
+			<div class="panel-body" ng-controller="infoController">
+				<ul class="list-group">
+					<li class="list-group-item-info">
+						<p ng-bind="movie.data[0].desc"></p>
+						<img ng-src="{{movie.data[0].image}}" alt="" />
+					</li>
+				</ul>
+			<!--	<img ng-src="{{movie.data[0].image}}" alt="" />
+				{{movie.data['0'].videos[3].mp4}}-->
+				<!--<video src="{{movie.data['0'].videos[3].mp4}}" controls width="800" height=""></video>-->
+			</div>
+		</div>
+	</div>
+	
+
+	
+</body>
+<script src="angular.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	var app=angular.module("myapp",[]);
+	app.controller("infoController",function($scope,$http){
+//			https://api.asilu.com/fanyi/
+			$scope.movie={};
+			$http({
+				url:'https://api.asilu.com/mgtv/?callback=JSON_CALLBACK',
+				method:'jsonp',
+				params:{
+					id:3394357
+				}
+			}).success(function(data){
+				console.log(data);
+				$scope.movie=data;
+				console.log($scope.movie);
+			})
+		
+	})
+</script>
+</html>

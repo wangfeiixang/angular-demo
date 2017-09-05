@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html ng-app="myapp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css"/>
+    
+</head>
+<style>
+	
+</style>
+<body>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				知识点：
+			</div>
+			<div class="panel-body">
+				
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				效果：
+			</div>
+			<div  class="panel-body" ng-controller="infoController">
+				<form action="">
+					<input ng-disabled="!canUse" type="text" name="a" class="form-control" value="11" />
+					<input ng-readonly="!canUse" type="text" name="b" class="form-control" value="22"/>
+					<input type="checkbox" ng-model="canUse" />
+					<button type="submit" class="btn btn-success">提交</button>
+				</form>
+				<hr />
+				<button ng-click="isHide=!isHide" class="btn btn-primary">按钮</button>
+				<hr />
+				<!--<p ng-show="isShow">ng-show哈哈啊哈哈</p>
+				<p ng-hide="!isShow">ng-hide哈哈啊哈哈</p>
+				<p ng-if="isShow">ng-if哈哈哈哈</p>-->
+				<p ng-show="isHide">88888888</p>
+				<p ng-hide="!isHide">99999</p>
+				<p ng-if="isHide">66666</p>
+			</div>
+		</div>
+	</div>
+	
+
+	
+</body>
+
+<script src="angular.min.js" type="text/javascript" charset="utf-8"></script>
+<script>
+	var app=angular.module("myapp",[]);
+	app.controller("infoController",function($scope,$interval){
+		
+		//disabled和readonly有什么区别
+		//disabled是全面禁用，用户不能操作修改，表单也不会提交该字段
+		//readonly只是UI禁用，用户不能操作修改，但是表单会提交该字段
+		
+		$scope.canUse=false;
+		$scope.isShow=true;
+		$scope.isHide=true;
+	})
+	
+	
+	
+	
+</script>
+</html>

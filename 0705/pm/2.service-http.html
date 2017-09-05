@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html ng-app="myapp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css"/>
+    
+</head>
+<body>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				知识点：
+			</div>
+			<div class="panel-body">
+				<p>1.angular提供了$http服务来获取数据，本质是一个函数，传入的参数是一个对象,包含url，method，params</p>
+				<p>2.url数据接口，method请求方式，get/post，params请求参数</p>
+				
+				<p>3.成功和错误回调，是需要链式使用的</p>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				效果：
+			</div>
+			<div class="panel-body" ng-controller="infoController">
+				<ul class="list-group" ng-repeat="data in data">
+					<li class="list-group-item" ng-bind="data.className"></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	
+
+	
+</body>
+
+<script src="angular.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	var app=angular.module("myapp",[]);
+	//	'http://datainfo.duapp.com/shopdata/getclass.php'
+	app.controller("infoController",function($scope,$http){
+		//console.log($http);
+		$scope.data = "";
+		
+		$http({
+			url:"http://datainfo.duapp.com/shopdata/getclass.php",
+			method:"get",
+			params:{
+				
+			}
+			
+		}).success(function(data){
+			$scope.data = data;
+			//console.log(data);
+			console.log( $scope.data );
+			
+		}).error(function(error){
+			
+			console.log(error);
+		})
+		
+		
+		/*$http({
+			url:'http://datainfo.duapp.com/shopdata/getclass.php',
+			method:'get',
+			params:{
+				a:1,b:2
+			}
+		}).success(function(data){
+			console.log(data)
+		}).error(function(err){
+			console.log(err)
+		})*/
+		
+		
+		
+	})
+</script>
+</html>

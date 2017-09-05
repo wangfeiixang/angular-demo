@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html ng-app="myapp">
+<head lang="en">
+    <meta charset="UTF-8">
+    	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+</head>
+<body ng-controller="appController">
+	<header class="bar bar-nav">
+        <a class="icon pull-left"  href="#/concat"></a><!--icon-left-->
+        <h1 class="title">辣条</h1>
+    </header>
+
+    <!-- 工具栏 -->
+    <nav class="bar bar-tab" >
+        <a ng-click="click(chat)" ng-class="active? 'active' :'' " class="tab-item external" href="#/chat">
+            <span  class="icon icon-home"></span>
+            <span class="tab-label">聊天</span>
+        </a>
+        <a ng-click="click(concat)" ng-class="active? 'active' :'' " class="tab-item external" href="#/concat">
+            <span class="icon icon-star"></span>
+            <span class="tab-label">联系人</span>
+        </a>
+        <a ng-click="click(circle)" ng-class="active? 'active' :'' " class="tab-item external" href="#/circle">
+            <span class="icon icon-settings"></span>
+            <span class="tab-label">朋友圈</span>
+        </a>
+    </nav>
+
+    <!-- 这里是页面内容区 -->
+    <div class="content">
+        <div class="content-block" ng-view></div>
+    </div>
+</body>
+<script src="../angular.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../angular-route.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	//1.引入angular-route.js
+	//2.在主模块里依赖
+	//3.确定模板切换的区域  ng-view
+	//4.配置路由表
+	//配置$routeProvider .when(对应的hash值，{tempalet/templateUrl,controller})
+	//5.重定向...
+	//当进入页面后没有hash值，就进入某一个路由内，获取当我们的hash值和路由表不匹配的时候，就重定向到某一个路由   .otherwise({redirectTo})
+	//6.路由传参
+	//先在路由表设置某一个路由来接收参数/:id   在控制器里注入一个$routeParams 来接收参数
+	
+	//每当路由切换的时候，控制器都会重新执行一遍
+	
+	var app = angular.module("myapp",['ngRoute']);
+	
+	app.controller("appController",['$scope',function($scope){
+		
+		$scope.active = false;
+		
+		$scope.click = function(type){
+			
+			console.log(1)
+			
+			$scope.active = true;
+		}
+		
+		//$scope.change(111)
+		
+		
+	}])
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</script>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html ng-app="myapp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css"/>
+    
+</head>
+<body>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				知识点：
+			</div>
+			<div class="panel-body">
+				<p></p>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				效果：
+			</div>
+			<div class="panel-body">
+				<div ng-controller="oneController">
+					<p>第一个控制器</p>
+					{{data.city}}
+					<button ng-click="changeCity('北京')" class="btn btn-success">北京</button>
+					<button ng-click="changeCity('天津')" class="btn btn-success">天津</button>
+					<button ng-click="changeCity('上海')" class="btn btn-success">上海</button>
+					<button ng-click="changeCity('成都')" class="btn btn-success">成都</button>
+				</div>
+				
+				<hr />
+				
+				<div ng-controller="twoController">
+					<p>第二个控制器</p>
+					{{data.city}}
+					<p ng-bind="movies.title"></p>
+					<ul class="list-group">
+						<li class="list-group-item" ng-repeat="movie in movies.subjects">
+							<img ng-src="{{movie.images.small}}"/>
+							<p ng-bind="movie.title"></p>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+<script src="angular.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+
+	var app=angular.module("myapp",[]);
+	app.service("data",function(){
+		this.city="北京";
+	})
+
+
+	app.controller("oneController",function($scope,data){
+
+			$scope.data=data;
+			$scope.changeCity=function(city){//重复城市不要再改了
+				if($scope.data.city==city){
+					return ;
+				}
+				$scope.data.city=city;
+			}
+	})
+	
+	app.controller("twoController",function($scope,$http,data){
+			
+		$scope.data=data;
+		$scope.movies={};
+		$scope.getMovies=function(){
+			console.log('get');
+			$http({
+				url:'http://getdata.duapp.com/getTouJson.php?callback=JSON_CALLBACK',
+				method:'jsonp',
+				params:{
+					src:'https://api.douban.com/v2/movie/in_theaters?city='+$scope.data.city
+				}
+			}).success(function(data){
+				$scope.movies=data;
+               // console.log( $scope.movies )
+			})
+		}
+//		$scope.getMovies();
+		//监听 当上面的控制器改city的时候，因为数据是共享的，所以在这里也能监听到
+		//然后去重新获取数据
+		$scope.$watch('data.city',function(n,o){
+		    //console.log( n )
+			$scope.getMovies();
+		})
+	})
+
+
+</script>
+</html>

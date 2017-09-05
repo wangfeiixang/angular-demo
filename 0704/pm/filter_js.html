@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html ng-app="myapp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css"/>
+
+</head>
+<body>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				知识点：
+			</div>
+			<div class="panel-body">
+				<p>1.过滤器不止能在v层的表达式或者ng-bind使用，还可以在控制器里使用，在控制器里使用可以保护代码，思想，先把数据通过过滤器格式化之后再在V层显示</p>
+				<p>2.使用方法：在控制器里注入$filter服务，本质是一个函数，可以根据你传入的参数返回不同的数据处理函数，在返回的函数里，第一个参数是要处理的数据，第二以及后面的参数就是传的参数</p>
+				<p>3.过滤器每次操作数据都不会操作原数据，需要重新赋值</p>
+				<p>4.在控制器里组合使用过滤器的话只能再重新过滤一次，因为每次只能使用一个过滤器</p>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				效果：
+			</div>
+			<div class="panel-body" ng-controller="filterController">
+				<p>{{word}}</p>
+				<p>{{'abHcEdefgFGH' | limitTo : 6 | lowercase  }}</p>
+			</div>
+		</div>
+	</div>
+
+
+
+</body>
+<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+<script src="angular.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	var app=angular.module("myapp",[]);
+	
+	app.controller("filterController",["$scope","$filter",function($scope,$filter){
+		$scope.word='abHcEdefgFGH';
+		$scope.word=$filter('lowercase')($scope.word);
+		$scope.word=$filter('limitTo')($scope.word,4);
+		
+		//console.log($filter);
+		
+		//处理数据的函数，最好不要操作原数据		
+	}])
+	
+	
+	//保护原有数据
+//	function toUpper(str){
+//		var _str=str;
+//		return _str.toUpperCase();
+//	}
+//	var str='abc';
+//	
+//	str=toUpper(str)
+//	console.log(str)
+
+
+	
+	var _app={//module
+		
+		filters:{//存放过滤器的属性
+			'uppercase':function(str){
+				var _str = str;
+				return _str.toUpperCase()
+			},
+			'lowercase':function(str){
+				var _str = str;
+				return _str.toLowerCase()
+			},
+			'limitTo':function(arr,num,type){
+				var _arr = angular.copy(arr);
+				if(!num){return arr;}
+				return _arr.slice(0,num)
+			}
+		},
+		filter:function(filtername,callback){
+			this.filters[filtername]=callback()
+		}
+		
+	}
+	
+	_app.filter("firstupper",function(){
+		return function(str){
+			var _str = str;
+			return _str.substr(0,1).toUpperCase()+_str.substr(1).toLowerCase()
+		}
+	})
+	
+	function _filter(filtername){
+		return _app.filters[filtername]
+	}
+	
+	var str = 'abcdef';
+	
+	str = _filter('firstupper')(str)
+	str = _filter('limitTo')(str,4)
+	console.log(str)
+	
+</script>
+</html>

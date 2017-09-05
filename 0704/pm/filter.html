@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html ng-app="myapp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css"/>
+
+</head>
+<body>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				知识点：
+			</div>
+			<div class="panel-body">
+				<p>1.angular里提供了很多过滤器，可以将某种格式的数据转换为另一种格式的，可以在表达式里使用，ng-bind也可以</p>
+				<p>使用方法：data（要处理的数据）|（管道符） currency（你要使用的过滤器）: '￥'(设置的参数)</p>
+				<p>2.currency 货币过滤器，可以将数字，前面加上货币单位，默认是$，每三位加‘，’，后面默认有两位小数，参数可以设置货币的单位</p>
+				<p>3.number 数字过滤器，可以给数字设定小数位，默认是不设置，参数确定小数位，还会四舍五入</p>
+				<p>4.uppercase，lowercase大小写过滤器</p>
+				<p>5.json，将对象格式的数据显示出来，配套使用pre标签</p>
+				<p>6.limitTo截取，可以截取数组,集合，字符串，数字(当做字符串处理)默认不截取，参数为正的时候，从头截取，超过length，不截取，参数为负从后面截取</p>
+				<p>7.date，可以将时间戳转换为时间格式</p>
+				<p>8.orderBy，按照某一个规则排序，按照第一个参数来排序，默认升序，如果在第一个参数前加“-”就会降序，或者第二个参数是true降序，false就升序</p>
+				<p>9.filter，筛选，可以将值里带有参数的数据保留下来</p>
+				<p>10.过滤器的组合使用，ok，再用管道符连接到另一个过滤器里，注意：要有逻辑性</p>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				效果：
+			</div>
+			<div class="panel-body" ng-controller="filterController">
+				<p>{{125478.2567 | currency : '钱：'}}</p>
+				<p>{{125478.2567 | currency : '￥'}}</p>
+				<p>{{3.48965132 | number : 2}}</p>
+				<p>{{'hElLo' | lowercase}}</p>
+				<p>{{'hElLo' | uppercase}}</p>
+				<p><pre>{{person}}</pre></p>
+				<p><pre>{{person | json}}</pre></p>
+				<p>{{[1,2,3,4,5,6] | limitTo : 4}}</p>
+				<p>{{time | date : 'medium'}}</p>
+				<hr />
+				<p><code>
+					{{family | orderBy : 'name' :false}}
+				</code></p>
+				<hr />
+				<p><code>
+					<input type="text" ng-model="by" class="form-control" style="width: 200px;" />
+					{{family | filter : by}}
+				</code></p>
+				<hr />
+				<p>{{'abcdefg' | uppercase | limitTo : 4}}</p>
+				<p><pre>{{[1,2,3,4] | limitTo :3}}</pre></p>
+				<p>{{time | date:'yy-MM-dd hh-mm-ss-a'}}</p>
+				<p>{{time | date:'medium'}}</p>
+				<p>{{family | orderBy:'age':false}}</p>
+				<p>{{family | orderBy:'-age'}}</p>
+				<p></p>
+			</div>
+		</div>
+	</div>
+	
+	
+	
+
+	
+</body>
+<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+<script src="angular.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+
+	var app = angular.module("myapp",[]);
+	
+	app.controller("filterController",function($scope){
+		$scope.pi = Math.PI;
+		console.log($scope.pi);
+		$scope.person={
+			name:'二狗子',
+			age:16,
+			sex:'男'
+		}
+		$scope.time = new Date().getTime();
+		
+		$scope.family=[
+			{name:'xiaoming',age:78,sex:'male'},
+			{name:'xiaofang',age:92,sex:'female'},
+			{name:'ergouzi',age:12,sex:'male'}
+		]
+	});
+	
+	
+	//排序:一般都不是前端做的：
+	//1.前端直接像后端发送请求，请求按照某种规则排序后的数据
+	//2.后端接收到请求后，获取数据之后进行排序返回给前端
+	
+</script>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html ng-app="myapp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css"/>
+    
+</head>
+<body>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				知识点：
+			</div>
+			<div class="panel-body">
+				<p>可以通过ng-repeat-start和ng-repeat-end确定一个循环的范围</p>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				效果：
+			</div>
+			<div class="panel-body" ng-controller="infoController">
+				<ul class="list-group">
+					<li class="list-group-item list-group-item-heading">学生信息表</li>
+					
+					<li class="list-group-item list-group-item-info" ng-repeat-start="str in dataList">学生信息：</li>
+					<li class="list-group-item">
+						{{str.name}}
+						{{str.age}}
+						{{str.sex}}
+					</li>
+				  <li ng-style="liStyle" class="list-group-item list-group-item-success" ng-repeat-end>将于{{str.end}}毕业</li>
+				</ul>
+				<img ng-src="{{src}}" class="img-responsive img-thumbnail"/>
+			</div>
+		</div>
+	</div>
+	
+
+
+	
+</body>
+
+<script src="angular.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	var app=angular.module("myapp",[]);
+	app.controller("infoController",function($scope){
+		$scope.dataList=[
+			{name:"小明",age:18,sex:'男',end:'2017-06-1'},
+			{name:"小芳",age:17,sex:'女',end:'2016-06-1'},
+			{name:"小沈阳",age:40,sex:'男',end:'2015-06-1'},
+			{name:"李华",age:20,sex:'男',end:'2018-06-1'},
+			{name:"韩梅梅",age:12,sex:'女',end:'2020-06-1'},
+		]
+		
+		$scope.liStyle={
+			marginBottom:15+'px'
+		}
+		$scope.src="./apple.jpg";
+		//$scope.src="http://img.mp.itc.cn/upload/20170321/53bc4fd918524215b04f12d4ec505fa0_th.jpeg";
+	})
+</script>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css"/>
+    <style>
+    	#div1{
+    		width: 100px;
+    		height: 100px;
+     		border:1px solid #333;
+    	}
+    	.red{background: red;}
+    </style>
+</head>
+<body>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				知识点：
+			</div>
+			<div class="panel-body">
+				<p>1.angular.version 存放了angular的版本信息</p>
+				<p>2.angular.copy(a) 可以深拷贝a，返回一个内容和a一样的新的对象</p>
+				<p>3.angular.extend(a,b) 可以使a拥有b的方法，如有相同会覆盖</p>
+				<p>4.angular.equals(a,b) 判断a是否和b相等 返回一个布尔值，类似于===   NaN===NaN</p>
+				<p>5.angular.forEach  可以 遍历数组、字符串、object，注意，回调函数的参数和jq相反</p>
+				<p>6.angular.toJson/fromJson  toJson:将对象转换为字符串  fromJson:将字符串转换为对象</p>
+				<p>7.angular.element()可以将一个dom对象转换成一个jqlit对象，可以使用一些jq的方法</p>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				效果：
+			</div>
+			<div class="panel-body">
+				<div id="odiv">123</div>
+				
+	
+			</div>
+		</div>
+	</div>
+	
+	
+
+	
+</body>
+<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+<script src="angular.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	
+	//1.version	
+//	console.log(angular.version)
+//	
+//	var arr=[1,2,3]
+//	
+////	var arr2=arr;//浅拷贝
+//
+//	var arr2=arr.slice();	//深拷贝
+//
+////	var arr2=[];
+////	for(var i =0;i<arr.length;i++){
+////		arr2.push(arr[i])
+////	}
+//	arr2.push(4);
+//	console.log(arr2)
+//	console.log(arr)
+	
+	
+	
+	//伪数组转换真数组
+	//arguments    document.getElements ...
+	//特点，有length，可遍历，不能使用数组的方法
+	
+//	var as = document.getElementsByClassName("a");
+	
+//	var _as = Array.prototype.slice.call(as);
+//	var _as = Array.prototype.slice.apply(as);
+//	var _as = Array.prototype.slice.bind(as)();
+
+	//1.数组有slice方法，不传参的时候就会返回一个和原来数组一样的数组
+	//2.想：如果伪数组直接调用slice方法，返回一个和伪数组一样的真数组，重新赋值即可
+	//3.想：伪数组不能调用这个方法，反正这个方法要执行，只需要在执行时候偷偷把里面的this换成伪数组就可以了，效果和直接调用是一样的
+	
+	
+	
+	
+	//2.copy
+	
+	var a = [1,2,3];
+	
+	var b = angular.copy(a);
+	b.push(4)
+//	console.log(a,b)
+	
+	//3.extend   $.extend
+	//将A没有的属性和方法给了A，同键的会覆盖
+	var a={
+		name:'allen',
+		age:16
+	}
+	
+	var b ={
+		age:18,
+		sex:'male'
+	}
+	
+	angular.extend(a,b)
+	
+	//console.log(a)
+	
+	
+	//4.   fromJson toJson   JSON.parse   JSON.stringify()
+
+	var obj={
+		name:'allen',age:18
+	}
+	
+	var str = angular.toJson(obj);
+	console.log(str);
+	console.log(angular.fromJson(str))
+	
+	
+	//5.equals  做纯粹的值的对比，不考虑类型之间的区别
+	/*console.log(angular.equals({name:'allen'},{name:'allen'}))
+	
+	console.log(angular.equals(NaN,NaN))
+		
+	console.log(angular.equals(+0,-0))*/
+	
+	console.log(angular.equals(+0,-0))
+	console.log( angular.equals(1,"1") )
+	
+	//6. forEach  array
+	
+//	for->array,  for in -->object
+	
+//	$.each  array   object    index obj
+
+//  forEach  array        item,index
+
+//	angular.forEach([1,2,3,4],function(item,index){
+//		console.log(item,index)
+//	})
+
+
+	//7.
+//	angular.lowercase(string)  大写变小写
+//	angular.uppercase(string)  小写变大写
+	
+//	console.log(angular.uppercase('abc'))
+	
+	
+//	== true === false
+
+
+	//8.element()  获取dom元素
+//	$("#odiv")
+//  angular 里的jqlit  它没有做获取dom的优化，在内部也封装了一些类似于jq 的方法
+//	var odiv = angular.element(document.getElementById('odiv'))
+//	odiv.addClass("text-info")
+//	console.log(odiv)
+	
+	
+	
+	var odiv = angular.element(document.getElementById("odiv"));
+	
+	odiv.html('555');
+	
+	
+	
+	
+</script>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html ng-app="myapp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+	<link rel="stylesheet" type="text/css" href="bootstrap.min.css"/>
+	<style>
+
+	</style>
+    
+</head>
+<body>  
+	   <p class="box"></p>  
+	<div class="container">
+		<div class="panel panrel-primary">
+			<div class="panel-heading">
+				知识点：
+			</div>
+			<div class="panel-body">
+				<p>1.使用provider方法可以创建一个拥有服务供应商的服务</p>
+				<p>2.使用config方法可以配置服务供应商的参数来使服务功能改变</p>
+				<p>3.当服务注入到控制器里开始使用的时候，在进行配置服务供应商已经对当前的服务已经不起作用了</p>
+				<p>4.配置服务供应商的时候，要在服务使用之前配置</p>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				效果：
+			</div>
+			<div class="panel-body">
+				<div ng-controller="infoController">
+					<button ng-click="surf()" class="btn btn-success">上网</button>
+					<button ng-click="fast()" class="btn btn-success">提速</button>
+					<input type="text" ng-model="num" />
+					<button ng-click="m_fast()" class="btn btn-success">提速12M</button>
+					<hr />
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	
+
+	
+</body>
+
+<script src="angular.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	var app=angular.module("myapp",[]);
+
+//	app.provider('servicename',function(){
+//		return {
+//			$get:function(){
+//				return ...
+//			}
+//		}
+//	})
+	//服务是有服务供应商的  $interpolate expression  $interpolateProvider -》{{}}  @@ @@ 
+	//并不是所有的服务都有服务供应商
+	
+	// factory  -》没有服务供应商
+	//provider -》拥有服务供应商
+	
+	//配置服务供应商的时候，要在服务使用之前配置
+	
+	//享受网络服务-》找服务供应商  -》可以通过对供应商的配置 来使服务使用起来有区别
+	
+	//this  -> 当前的方法属于谁，this就指向谁
+	
+	
+	app.provider("internet",function(){
+		return {//服务供应商（联通）
+			speeds:{
+				"one":4,
+				"two":8,
+				"three":10,
+				'four':12
+			},
+			speed:'one',
+			fast_speed:'three',
+			$get:function(){//办事员，专门给我们提供网络服务
+				//...
+				var that = this;
+				return {
+					surf:function(){
+						console.log('您正在上网,带宽为'+that.speeds[that.speed]+'M')
+					},
+					fast:function(num){
+						/*if ( num=="" ) {
+							num = that.speeds[that.fast_speed]
+						} else{
+							num = num;
+						}*/
+						num= num == "" ? that.speeds[that.fast_speed]:num; 
+						//console.log(num)
+						console.log('您上网速度正在提升,带宽为'+num+'M')
+					},
+					m_fast:function(){
+						
+						console.log('您上网速度已经提升到最大,带宽为'+that.speeds.four+'M')
+						
+					}
+				}
+			},
+			getRandom:function(num1,num2){
+				return Math.random()*(num2-num1)+num1;
+			}
+			
+		}
+	})
+	
+
+	app.config(function(internetProvider){
+		internetProvider.speed='two';
+		//internetProvider.fast_speed='three';
+		internetProvider.getRandom(5,3);
+		console.log( internetProvider )
+		//console.log( internetProvider.getRandom(5,3) );
+	})
+
+
+	app.controller("infoController",function($scope,internet){
+		$scope.surf=function(){
+			internet.surf()
+		}
+		$scope.num = '';
+		$scope.fast=function(){
+			//console.log($scope.num)
+			internet.fast($scope.num)
+			//internetProvider.speed='three';
+		}
+		$scope.m_fast=function(){
+			internet.m_fast()
+			//internetProvider.speed='three';
+		}
+		console.log(internet);
+		
+		//$scope.num = numberservice.getRandomBetween(2,6)
+	})
+	
+	
+	
+	
+	
+	
+//	//dom 元素      本地对象  内置对象  宿主对象（DOM BOM）
+//	document.getElementById('a').onclick=function(){
+//		console.log(this)
+//	}
+//	
+//	
+//	//property     值为函数   method    属性
+
+
+
+//	function a(){
+//		alert(this)
+//	}	
+//	window.a() 	
+//	var b=1;	
+//	console.log(window)
+	
+//console.log(window)
+	
+	
+	
+	
+	
+</script>
+</html>

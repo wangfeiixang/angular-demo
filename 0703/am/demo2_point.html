@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no"/>
+</head>
+<style>
+    body{margin: 0;padding: 0;height: 200vh;}
+    .a{
+        position: absolute;
+        top: 0;
+        width: 100vw;
+        height: 50vw;
+        background: rgba(255,255,0,0.8);
+    }
+    .b{
+        width: 50vw;
+        height: 20vw;
+        background: green;
+    }
+
+</style>
+<body>
+    <div class="a"></div>
+    <div class="ze"></div>
+    <div class="b"></div>
+</body>
+<script src="touch.js"></script>
+<script>
+	
+	// 移动端    1px边框...
+	
+	//点透事件触发的场景：
+	
+	//1.得有上下层关系 2.上层元素绑定的是tap事件，并且tap之后消失 3.下层元素绑定click事件
+	//-》上层元素消失的时候触发了下层元素的click事件，例如a标签，这个时候页面莫名其妙的调整...
+	
+	
+	//解决方法：
+	//1.将下层的click事件换成tap事件，有的时候元素自带的就是click事件，  a 
+	//2.使用缓动动画    让上层元素不要瞬间消失 ，以动画的形式消失，淡出... 时间只要撑够300ms就可以
+	//               可能会与需求不符合
+	
+	//3.使用中间层来接受点透   给中间层添加click事件，被触发后消失，这样的话，上层的tap点透到的就是中间层
+//	  触发中间层的click事件使其消失,下层的元素就会被保护
+
+
+	//4.使用fastclick库
+</script>
+</html>

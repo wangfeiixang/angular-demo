@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html ng-app="myapp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css"/>
+
+</head>
+<body>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				知识点：
+			</div>
+			<div class="panel-body">
+				<p>1.angular自带的过滤器可能满足不了业务需求，有的时候需要自己扩展过滤器，扩展的过滤器和自带的过滤器是完全一样</p>
+				<p>2.下面是实现首字母大写的过滤器代码</p>
+				<pre>
+
+
+				</pre>
+				<p>3.作业：实现一个多位字母大写someUpperCase,不传参数就首字母大写，传2，就前两位大写..</p>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				效果：
+			</div>
+			<div class="panel-body" ng-controller="filterController">
+				{{'abcdefDSFSA' | someupper : 4}}
+				<p>{{str}}</p>
+			</div>
+		</div>
+	</div>
+	
+	
+	
+
+	
+</body>
+<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+<script src="angular.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	var app=angular.module("myapp",[]);
+	
+	app.filter("firstupper",function(){
+		return function(str){
+			var _str = str;
+			return _str.substr(0,1).toUpperCase()+_str.substr(1).toLowerCase()
+		}
+	})
+	
+	app.filter("someupper",function(){
+		return function(str,num){
+			var _str = str;
+			return _str.substr(0,num).toUpperCase()+_str.substr(num).toLowerCase()
+		}
+	})
+	
+	app.filter("secongupper",function(){
+		return function(str){
+			var _str = str;
+			return _str.substring(0,1).toLocaleLowerCase()+_str.substring(1,2).toLocaleUpperCase()+_str.substring(2).toLocaleLowerCase();
+		}
+		
+	})
+	
+	//
+	
+	app.controller("filterController",function($scope,$filter){
+		$scope.str='asgdfgh';
+		//str=$filter('someupper')(str,2);
+		$scope.str = $filter('secongupper')($scope.str);
+		console.log($scope.str)
+	})
+	
+	
+	
+</script>
+</html>

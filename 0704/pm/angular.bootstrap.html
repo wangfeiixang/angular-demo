@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html >
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css"/>
+
+</head>
+<body>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				知识点：
+			</div>
+			<div class="panel-body">
+				<p>angular.bootstrap可以在某个dom元素上启动某一个模块，第一个参数是dom元素，第二个参数是启动模块的数组，不要这么去做，因为不方便管理</p>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				效果：
+			</div>
+			<div class="panel-body">
+				<div id="div1">
+					{{1+2}}
+					<div class="" ng-controller="oneController">
+						<div>{{name}}</div>
+						<div>{{name1}}</div>
+					</div>
+				</div>
+				<hr />
+				<div id="div2">
+					<p>{{1+2}}</p>
+					<br />
+					<p>{{name}}</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+<script src="angular.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	
+	//angular.bootstrap  手动启动模块               
+	
+	var app1=angular.module("m1",[])
+	var app2=angular.module("m2",[])
+
+	app1.controller("oneController",function($scope){
+		$scope.name="modulde 1";
+		
+	})
+	
+	app2.run(function($rootScope){
+		
+		$rootScope.name1 = '222';
+		
+	})
+
+	var div1 = document.getElementById("div1");
+	var div2 = document.getElementById("div2");
+
+
+	angular.bootstrap(div1,['m1','m2']);
+//	angular.bootstrap(div2,['m2']);
+
+	
+
+</script>
+</html>

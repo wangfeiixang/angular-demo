@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html ng-app="myapp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css"/>
+    
+</head>
+<body>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				知识点：
+			</div>
+			<div class="panel-body">
+				<p>1.只要m层的数据发生改变之后，v层的显示会马上的也发生改变</p>
+				<p>2.脏数据检验，脏数据指的就是更改后的数据，因为有的时候在使用类似于setTimeout这样的原生方法来改变数据的时候，v层不会跟随更改，这个时候就需要进行脏数据检验，方法就是：$scope.$apply()</p>
+				<p>3.在使用$timeout服务来更改数据的时候就不需要进行脏数据检验</p>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				效果：
+			</div>
+			<div class="panel-body" ng-controller="mineController">
+				<ul class="list-group">
+					<li class="list-group-item">姓名：<span ng-bind="family[index].name"></span></li>
+					<li class="list-group-item">年龄：<span ng-bind="family[index].age"></span></li>
+					<li class="list-group-item">性别：<span ng-bind="family[index].sex"></span></li>
+				</ul>
+				<button ng-click="change()" class="btn btn-success">next</button>
+			</div>
+		</div>
+	</div>
+	
+	
+</body>
+
+<script src="angular.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	//V中所有的显示情况，在M层都应该有数据来和它对应
+	var app=angular.module('myapp',[]);	
+	
+	app.controller("mineController",["$scope",'$timeout',function($scope,$timeout){		
+		$scope.family=[
+			{name:'大狗子',age:26,sex:'男'},
+			{name:'二狗子',age:21,sex:'男'},
+			{name:'王小花',age:18,sex:'女'},
+		]		
+		$scope.index = 0;
+		
+		var flag=true;		
+		$scope.change=function(){			
+			if(!flag){
+				return ;
+			}			
+			flag=false;
+			
+			//如果使用某些原生js或者jq的方法来更改M层的数据，V层是不会更改的
+			$timeout(function(){
+				$scope.index++;
+				if($scope.index>=$scope.family.length){
+					$scope.index=0;
+				}
+				flag=true;
+			},1000)	
+			
+			
+			//$scope.$apply();//脏数据检验 
+			
+			
+		}
+		
+		
+	}])
+	
+	
+	
+	
+	
+</script>
+</html>

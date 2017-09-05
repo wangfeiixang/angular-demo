@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html ng-app="myapp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css"/>
+    
+</head>
+<body>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				知识点：
+			</div>
+			<div class="panel-body">
+				
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				效果：
+			</div>
+			<div class="panel-body" ng-controller="infoController">
+				<!--<form ng-submit="pay()">
+					A:<input type="checkbox" ng-model="goods.isHasA" />{{goods.isHasA}}<br />
+					B:<input type="checkbox" ng-model="goods.isHasB"  />{{goods.isHasB}} <br />
+
+					<hr />
+					
+					全选：<input type="checkbox" ng-change="change()" ng-model="isAll"/>{{isAll}}
+					<hr />
+					<button type="submit" class="btn btn-success">支付</button>
+				</form>-->
+				<form ng-submit="pay()">
+					衣服: <input type="checkbox" ng-model="goods.isHasA"/>{{goods.isHasA}}<br />
+					裤子: <input type="checkbox" ng-model="goods.isHasB"/> {{goods.isHasB}}<br />
+					全选按钮: <input type="checkbox" ng-change="change()" ng-model="isAll"/>{{isAll}} <br />
+					
+					<input type="submit" value="提交"/>
+				</form>
+				
+			</div>
+			<div class="panel-footer ">666</div>
+		</div>
+	</div>
+	<div class="container">
+		<ul class="list-group">
+			<li class="list-group-item">99</li>
+			<li class="list-group-item">99</li>
+			<li class="list-group-item">99</li>
+		</ul>
+		<div class="jumbotron">88888</div>
+	</div>
+
+	
+</body>
+
+<script src="angular.min.js" type="text/javascript" charset="utf-8"></script>
+<script>
+	var app=angular.module("myapp",[]);
+	app.controller("infoController",function($scope){
+		$scope.isAll=false;
+		$scope.goods={
+			isHasA:false,
+			isHasB:false
+		}	
+		
+		$scope.change = function(){
+			//console.log($scope.isAll);
+			
+			$scope.goods.isHasA =$scope.isAll;
+				
+			$scope.goods.isHasB =$scope.isAll;
+			
+		}
+		
+		$scope.$watch("goods",function(n,o){
+			
+			//console.log( n )
+			if ( !(n.isHasA && n.isHasB) ) {
+				
+				$scope.isAll=false;
+				
+			} 
+			
+		},true)
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		/*$scope.change=function(){
+			$scope.goods.isHasA=$scope.isAll;
+			$scope.goods.isHasB=$scope.isAll;
+
+		}		
+		$scope.$watch('goods',function(n,o){
+			if(n.isHasA&&n.isHasB){
+				$scope.isAll=true;
+			}else{
+				$scope.isAll=false;
+			}
+		},true)*/
+		
+		$scope.pay=function(){
+			console.log($scope.goods)
+		}
+	})
+	
+	
+</script>
+</html>

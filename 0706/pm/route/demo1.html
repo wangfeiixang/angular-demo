@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../bootstrap.min.css"/>   
+</head>
+<body>
+	
+	<div class="container">
+		<p>
+			<a class="btn btn-success" href="#/a">A</a>
+			<a class="btn btn-success" href="#/b">B</a>
+			<a class="btn btn-success" href="#/c">C</a>
+		</p>
+		<div id="view">
+			
+		</div>
+	</div>
+	
+</body>
+<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+<script type="text/javascript">
+	//配置路由表
+	//检测hash值变化 来切换模板
+	//初始化hash设置
+	//重定向
+	
+	//缓存
+
+	
+	//根据页面的hash值的变化来让内容变化	
+	//配置路由表   准备在hash值改变的时候，来进行遍历查询，渲染对应的页面，并执行控制器函数
+	var route = {
+		'/a':{
+			templateUrl:'./A.html',
+			controller:function(){
+				console.log('A is ok')
+			}
+		},
+		'/b':{
+			templateUrl:'./B.html',
+			controller:function(){
+				console.log('B is ok')
+			}
+		},
+		'/c':{
+			templateUrl:'./C.html',
+			controller:function(){
+				console.log('C is ok')
+			}
+		}
+	}
+	
+	//存放缓存的对象
+	var cache={}
+	
+	
+	//在刚进入应用的时候，检测一下，有没有hash值，没有的话，就加上，并获取数据	
+	setHash()
+	
+	//当hash变化的时候，重新加载模板
+	window.addEventListener("hashchange",function(){
+		getView(getHash())
+	})
+	
+	
+	//得到当前hash值
+	function getHash(){
+		return location.href.split("#")[1]
+	}
+	
+	//设置hash值，不传参的时候会判断，如果没有hash值就加上/a
+	//传参的话，把hash值设置为传入的参数
+	function setHash(hash){
+		if(hash){
+			location.href=location.href.split("#")[0]+'#'+hash
+		}else if(location.href.indexOf('#')<0){
+			location.href+='#/a'
+		}
+	}
+	
+	//根据hash值替换不同的模板
+	function getView(hash){
+		var hashObj={};
+		var isHas=false;
+		for(var key in route){
+			if(key==hash){
+				hashObj=route[key];
+				isHas=true
+			}
+		}
+		
+		if(!isHas){
+			//当hash不能和路由表进行匹配的时候，重定向到/a
+			setHash('/a');
+			return ;
+		}
+		//替换路由模板
+		setView(hashObj)
+		
+		
+	}
+	
+	
+	function setView(hashObj){
+		//如果缓存里有，直接渲染
+		console.log( cache )
+		for(var key in cache){
+			
+			if(key==hashObj.templateUrl){
+				$("#view").html(cache[key]);
+				hashObj.controller();
+				return ;
+			}
+		}
+		//如果缓存里没有，再去发送ajax来获取
+		$.ajax({
+			url:hashObj.templateUrl,
+			success:function(template){
+				cache[hashObj.templateUrl]=template
+				$("#view").html(template);
+				hashObj.controller()
+			}
+		})
+	}
+	
+</script>
+</html>

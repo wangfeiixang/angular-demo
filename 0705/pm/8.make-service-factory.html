@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html ng-app="myapp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css"/>
+    
+</head>
+
+<body>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				知识点：
+			</div>
+			<div class="panel-body">
+				<p>1.angular可以通过factory去自定义服务，第一个参数是服务的名称，第二个参数是回调函数，返回值就是真正的服务本体，可以是任意的数据类型，使用方法和angular自带服务一样，需要注入到控制器里</p>
+				<p>2.服务必然是会提供某些功能，自定义服务可以在创建的时候使用其他服务的功能</p>
+				<p>3.服务是挂载在模块上的，过滤器也是挂载在模块上的</p>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				效果：
+			</div>
+			<div class="panel-body">
+				<div ng-controller="infoController">
+					{{num}}
+				</div>				
+			</div>
+		</div>
+	</div>
+
+	
+	
+	
+	
+
+	
+</body>
+
+<script src="angular.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	var app=angular.module("myapp",[]);
+	
+	app.factory("numberservice",function(){
+		return {
+			getRandomBetween:function(num1,num2){
+				return Math.round(Math.random()*(num2-num1)+num1);
+			}
+		}
+	})
+	
+	app.factory("timeservice",function(){
+		
+		return {
+			getTime : function(){
+				var time = new Date().getHours();
+				return time;
+				
+			}
+			
+			
+		}
+		
+	})
+	
+	
+	
+	app.controller("infoController",function($scope,numberservice,timeservice){
+		$scope.num=numberservice.getRandomBetween(3,5);
+		$scope.time = new Date().getMinutes();
+		//console.log(numberservice);
+		console.log( timeservice.getTime()+':'+$scope.time );
+	})	
+	
+	
+
+	
+	
+</script>
+</html>

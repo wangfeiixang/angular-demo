@@ -1,0 +1,5 @@
+{
+  "devDependencies": {
+    "echarts": "^3.6.2"
+  }
+}

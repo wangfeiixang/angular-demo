@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html ng-app="myapp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css"/>
+    
+</head>
+<body>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				知识点：
+			</div>
+			<div class="panel-body">
+				<p>1.给ng-app赋值之后，可以在js部分通过angular.module来定义主模块，第一个参数是模块的名字，因为定义的是主模块，所以这里应该是ng-app指令的值</p>
+				<p>2.模块上会controller方法可以用来定义控制器，第一个参数是控制器的名字，第二个参数是控制器的执行函数</p>
+				<p>3.在html的部分，可以用过ng-controller指令来确定某个控制器作用的范围</p>
+				<p>4.在控制器的回调函数里，可以注入$scope参数，在这个东西上挂载的数据，就可以在html该控制作用的 范围内使用（expression——ng-bind）</p>
+				<p>5.angular里的mvc：controller-c,html-v,m-data</p>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				效果：
+			</div>
+			<div class="panel-body" ng-controller="mainController">
+				{{name}}--{{age}}--{{name}}
+			</div>
+		</div>
+	</div>
+	
+
+</body>
+
+<script src="angular.min.js" type="text/javascript" charset="utf-8"></script>
+
+<script type="text/javascript">
+	//创建主模块 myapp
+	var app = angular.module("myapp",[]);
+	//创建控制器  MVC C   需要在V层进行启动
+	//$injector 注入器...-》注入到控制器里
+	//
+	app.controller("mainController",['$scope','$http','$filter',function(a,$http,$filter){
+		a.name="二狗子"
+		a.age = 18
+	}])	
+	//M 饼   V 肚子    C  钱
+	
+	
+
+
+
+
+	
+//	function abc(qwert,poiuyt,asdfgh,mnbvcx){
+//		return qwert+poiuyt+asdfgh+mnbvcx
+//	}	
+//	->	
+//	function abc(a,b,c,d){
+//		return a+b+c+d
+//	}
+	
+	
+	
+	
+</script>
+
+
+</html>

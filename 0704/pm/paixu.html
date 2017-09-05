@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html ng-app="myapp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="mui.min.css"/>
+    
+</head>
+<style>
+	html,body{
+		height: 100%;
+	}
+	body{
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+	}
+	header{
+		flex-grow: 0;flex-shrink: 0;
+	}
+	section{
+		flex-grow: 1;flex-shrink: 1;
+		overflow: scroll;
+		-webkit-overflow-scrolling: touch;
+	}
+	header .btn-box{
+		display: flex;
+		justify-content: space-around;
+	}
+	header .btn-box .mui-btn{
+		width: 25%;
+	}
+</style>
+<body ng-controller="infoController">
+	
+	<header class="mui-content mui-content-padded">
+		<div class="mui-input-row mui-search">
+		    <input ng-model="filterBy" type="search" class="mui-input-clear" placeholder="">
+		</div>
+		<div class="btn-box">
+			<button ng-click="changeOrderStyle('price')" ng-class="order.by!='price'?'mui-btn-outlined':''" type="button" class="mui-btn mui-btn-primary">价格</button>
+			<button ng-click="changeOrderStyle('hot')" ng-class="order.by!='hot'?'mui-btn-outlined':''"  type="button" class="mui-btn mui-btn-success">人气</button>
+			<button ng-click="changeOrderStyle('sale')" ng-class="order.by!='sale'?'mui-btn-outlined':''"  type="button" class="mui-btn mui-btn-danger">销量</button>
+		</div>
+	</header>
+	
+	<section class="mui-content mui-content-padded">
+		
+		<div class="mui-card" ng-repeat="phone in dataList | myFilter : filterBy | myOrderBy : order.by : order.style">
+			<div class="mui-card-header" ng-bind="phone.name"></div>
+			<div class="mui-card-content">
+				<div class="mui-card-content-inner">
+					价格：<span ng-bind="phone.price"></span> &nbsp;&nbsp;人气：<span ng-bind="phone.hot"></span> &nbsp;&nbsp;销量：<span ng-bind="phone.sale"></span>
+				</div>
+			</div>
+		</div>
+		
+	</section>
+
+	
+</body>
+<script src="angular.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	var app=angular.module("myapp",[]);
+
+	app.filter("myOrderBy",function(){
+		return function(data,by,style){
+			var _data=data.slice();			
+			_data.sort(function(a,b){
+				var va=parseFloat(a[by]);
+				var vb=parseFloat(b[by]);				
+				if(style){
+					return vb-va;
+				}else{
+					return va-vb;
+				}				
+			})			
+			return _data
+		}
+	})
+	
+	
+	app.filter("myFilter",function(){
+		return function(data,by){
+			var _data=[];
+			var by=by.toLowerCase();
+			var name='';
+			data.forEach(function(phone,index){
+				name=phone.name.toLowerCase();
+				if(name.indexOf(by)>-1){
+					_data.push(phone)
+				}
+			})
+			
+			return _data;
+		}
+	})
+	
+
+	app.controller("infoController",function($scope){
+		$scope.dataList=[
+    		{name:"iphone7",price:"5000",hot:97,sale:1500},    		
+    		{name:"小米4",price:"2999",hot:68,sale:3001},
+    		{name:"iphone6",price:"4000",hot:95,sale:2200},
+    		{name:"华为荣耀3C",price:"3500",hot:101,sale:4125},
+    		{name:"OPPOR9",price:"300",hot:10,sale:4366},
+    		{name:"iphone5",price:"1500",hot:66,sale:2516},
+    		{name:"SUMSUNG",price:"1999",hot:55,sale:2},
+    		{name:"NOKIA",price:"1499",hot:60,sale:623},
+    		{name:"iphone4s",price:"700",hot:55,sale:1866}
+    	]
+
+		$scope.filterBy=""
+		
+		$scope.order={
+			by:'price',
+			style:true
+		};
+		
+		$scope.changeOrderStyle=function(by){
+			if(by==$scope.order.by){
+				$scope.order.style=!$scope.order.style;
+			}else{
+				$scope.order.by=by
+			}
+			
+			
+		}
+		
+	})
+	
+</script>
+</html>

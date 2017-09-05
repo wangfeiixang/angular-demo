@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html ng-app="myapp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css"/>
+    
+</head>
+<body ng-init="firstName='李'">
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				知识点：
+			</div>
+			<div class="panel-body">
+				<p>1.控制器回调函数里的形参都不能进行修改，因为在这里写什么，angular就会给控制器里去注入什么</p>
+				<p>2.控制回调函数里可以注入服务，需要什么服务就注入什么服务，这就是angular 的依赖注入的特性</p>
+				<p>3.控制器的作用范围可以嵌套，控制器的数据使用，只能是从里到外，就近查找</p>
+				<p>4.挂载在控制器scope作用域上的相当于局部变量，外面不能使用</p>
+				<p>5.$rootScope上的数据，就是全局的数据，任何控制器里都可以访问</p>
+				<p>6.给$rootScope上挂载数据的方式：1.在任意一个控制器里注入$rootScope服务来挂载全局数据  ；2.通过app.run来注入$rootScope进行挂载数据;3.ng-init</p>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading"  ng-init="age=18">
+				效果：
+			</div>
+			
+			<div class="panel-body">
+				<div ng-controller="fatherController">
+						<p>父亲：</p>
+						<p>{{firstName}}{{name}}--{{address}}</p>
+					<div ng-controller="sonController">
+						<p>儿子：</p>
+						<p>{{firstName}}{{name}}--{{age}}--{{address}}</p>
+					</div>				
+				</div>
+				
+			</div>
+		</div>
+	</div>
+</body>
+
+<script src="angular.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	var app=angular.module("myapp",[]);
+//	scope 范围 域
+	//从里到外，就近查找   类似于函数的作用域链     原型链
+	app.controller("fatherController",function($scope){
+		$scope.name="狗子爸"
+	})
+	//$rootScope服务 在控制器的回调函数等地方注入的东西除了$scope都叫服务
+	app.controller("sonController",function($scope,$rootScope){
+		$scope.name="二狗子"
+		$rootScope.firstName='王'
+	})
+	
+	
+	
+	app.run(['$rootScope',function(a){
+		a.address="北京"
+	}])
+	
+</script>
+</html>

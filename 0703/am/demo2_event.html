@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no"/>
+</head>
+<style>
+    body{margin: 0;padding: 0;}
+    .a{
+        width: 100vw;
+        height: 50vw;
+        background: yellow;
+    }
+</style>
+<body>
+    <div class="a"></div>
+</body>
+<script>
+    var a=document.querySelector(".a");
+	
+	//start move可以使用touches 、 targetTouches 、changedTouches
+	//end 只能使用changedTouches
+	
+	//有的时候触发事件的手指不止一个，touches等数组里不止有一个对象了...
+
+    a.addEventListener("touchstart",function(e){
+//  	console.log(e.touches[0].screenX)
+    })
+
+	a.addEventListener("touchmove",function(e){
+//  	console.log(e.touches[0].screenX)
+    })
+	
+	a.addEventListener("touchend",function(e){
+    	console.log(e.changedTouches)
+    })
+</script>
+</html>
